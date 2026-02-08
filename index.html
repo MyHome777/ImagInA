@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ImaginA Tools - Herramientas PDF</title>
+    <link rel="icon" type="image/png" href="img/Gemini_Generated_Image_y0lyx5y0lyx5y0ly (1).png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --bg: #f8f9fa;
+            --text: #1f2937;
+            --text-muted: #6b7280;
+            --border: #e5e7eb;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            background-color: var(--bg);
+            /* Patrón de puntos sutil */
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 24px 24px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- MARCA DE AGUA / ADORNOS DE FONDO --- */
+        .bg-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.5; /* Ajusta la intensidad aquí */
+        }
+
+        .blob-1 {
+            top: -100px;
+            right: -100px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(67, 97, 238, 0.25) 0%, rgba(255,255,255,0) 70%);
+        }
+
+        .blob-2 {
+            bottom: -100px;
+            left: -100px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.15) 0%, rgba(255,255,255,0) 70%);
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.5);
+            display: flex;
+            justify-content: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* --- HERO --- */
+        .hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+        }
+
+            .hero h1 {
+                font-size: 2.5rem;
+                margin: 0 0 15px 0;
+                color: #111827;
+                font-weight: 800;
+                letter-spacing: -0.03em;
+            }
+
+            .hero p {
+                color: var(--text-muted);
+                margin: 0 0 35px 0;
+                font-size: 1.1rem;
+            }
+
+        .search-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 18px 20px 18px 55px;
+            font-size: 1rem;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+            .search-input:focus {
+                box-shadow: 0 8px 30px -5px rgba(67, 97, 238, 0.2);
+                border-color: var(--primary);
+                transform: translateY(-2px);
+            }
+
+        .search-icon {
+            position: absolute;
+            left: 22px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            font-size: 1.2rem;
+        }
+
+        /* --- GRID DE HERRAMIENTAS --- */
+        .main-content {
+            flex: 1; /* Empuja el footer hacia abajo */
+            padding-bottom: 60px;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.7); /* Semitransparente */
+            backdrop-filter: blur(10px);
+            padding: 30px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: var(--text);
+            border: 1px solid rgba(255,255,255,0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+            .card:hover {
+                transform: translateY(-8px);
+                background: #ffffff;
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+                border-color: rgba(67, 97, 238, 0.3);
+            }
+
+        .icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+            .icon svg {
+                width: 32px;
+                height: 32px;
+                stroke-width: 2;
+            }
+
+        .card:hover .icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .info h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .info p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            display: none;
+            color: var(--text-muted);
+        }
+
+        /* --- SECCIÓN DE CONFIANZA (Estilo iLovePDF) --- */
+        .trust-section {
+            background-color: #f3f4f6; /* Gris claro sólido */
+            padding: 70px 20px;
+            text-align: center;
+            border-top: 1px solid #e5e7eb;
+            position: relative;
+            z-index: 10; /* Encima de los blobs */
+        }
+
+        .trust-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 50px;
+        }
+
+        .trust-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .trust-item {
+            flex: 1;
+            min-width: 250px;
+            max-width: 350px;
+        }
+
+        .trust-icon-box {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .trust-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #1f2937;
+        }
+
+        .trust-item p {
+            font-size: 0.95rem;
+            color: #4b5563;
+            line-height: 1.6;
+        }
+
+        /* --- FOOTER (OSCURO) --- */
+        footer {
+            background-color: #111827;
+            color: #f3f4f6;
+            padding: 60px 20px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #374151;
+        }
+
+        .footer-brand {
+            font-size: 1.4rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .footer-col h3 {
+            font-size: 1rem;
+            color: #fff;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+            .footer-links li {
+                margin-bottom: 12px;
+            }
+
+            .footer-links a {
+                color: #9ca3af;
+                text-decoration: none;
+                font-size: 0.9rem;
+                transition: color 0.2s;
+            }
+
+                .footer-links a:hover {
+                    color: #fff;
+                }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            color: #6b7280;
+            font-size: 0.85rem;
+        }
+
+        /* --- BOTONES SOCIALES DEL FOOTER --- */
+        .social-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #374151; /* Gris oscuro */
+            color: #fff;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .social-btn.wa:hover { background: #22c55e; } /* Verde WhatsApp */
+        .social-btn.web:hover { background: #4361ee; } /* Azul Marca */
+    </style>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8845528388052409"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+
+    <nav class="navbar">
+        <a href="index.html" class="brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary)"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
+            ImaginA Tools
+        </a>
+    </nav>
+
+    <div class="hero">
+        <h1>Herramientas PDF e Imagen</h1>
+        <p>Procesamiento 100% local. Tus archivos nunca salen de tu dispositivo.</p>
+        <div class="search-wrapper">
+            <i class="bi bi-search search-icon"></i>
+            <input type="text" class="search-input" id="searchInput" placeholder="Buscar herramienta (ej. Comprimir, Unir)...">
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="container" id="toolsContainer">
+
+            <a href="imagenes.html" class="card tool-card">
+                <div class="icon" style="background: #eff6ff; color: #3b82f6;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><circle cx="9" cy="9" r="2" /><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" /></svg>
+                </div>
+                <div class="info">
+                    <h3>Editor Imágenes</h3>
+                    <p>Recorta, filtra y ajusta tus fotos.</p>
+                </div>
+            <a href="remover-fondo.html" class="card tool-card">
+                <div class="icon" style="background: #f3e8ff; color: #9333ea;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1Z"></path>
+                    </svg>
+                </div>
+                <div class="info">
+                    <h3>Remover Fondo</h3>
+                    <p>Elimina el fondo con IA.</p>
+                </div>
+            </a>
+            <a href="pdf.html" class="card tool-card">
+                <div class="icon" style="background: #fff1f2; color: #e11d48;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+                </div>
+                <div class="info">
+                    <h3>Fusionar PDFs</h3>
+                    <p>Une varios archivos en uno solo.</p>
+                </div>
+            </a>
+
+            <a href="extraer.html" class="card tool-card">
+                <div class="icon" style="background: #eef2ff; color: #6366f1;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3" /><circle cx="6" cy="18" r="3" /><line x1="20" x2="8.12" y1="4" y2="15.88" /><line x1="14.47" x2="20" y1="14.48" y2="20" /><line x1="8.12" x2="12" y1="8.12" y2="12" /></svg>
+                </div>
+                <div class="info">
+                    <h3>Extraer Páginas</h3>
+                    <p>Separa y guarda páginas sueltas.</p>
+                </div>
+            </a>
+
+            <a href="marca.html" class="card tool-card">
+                <div class="icon" style="background: #fef2f2; color: #ef4444;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><path d="m9 12 2 2 4-4" /></svg>
+                </div>
+                <div class="info">
+                    <h3>Marca de Agua</h3>
+                    <p>Protege tu autoría con logos o texto.</p>
+                </div>
+            </a>
+
+            <a href="rotarPdf.html" class="card tool-card">
+                <div class="icon" style="background: #fff7ed; color: #f97316;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" /><path d="M21 3v5h-5" /></svg>
+                </div>
+                <div class="info">
+                    <h3>Rotar PDF</h3>
+                    <p>Gira documentos escaneados.</p>
+                </div>
+            </a>
+
+            <a href="word.html" class="card tool-card">
+                <div class="icon" style="background: #eff6ff; color: #1d4ed8;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" /><polyline points="14 2 14 8 20 8" /><path d="M8 13l1.5 6h1l1.5-6 1.5 6h1l1.5-6" /></svg>
+                </div>
+                <div class="info">
+                    <h3>PDF a Word</h3>
+                    <p>Convierte a documento editable.</p>
+                </div>
+            </a>
+
+            <a href="img2pdf.html" class="card tool-card">
+                <div class="icon" style="background: #ecfdf5; color: #10b981;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="m21 15-5-5L5 21"></path></svg>
+                </div>
+                <div class="info">
+                    <h3>Fotos a PDF</h3>
+                    <p>Convierte imágenes a archivo PDF.</p>
+                </div>
+            </a>
+
+            <a href="firmar.html" class="card tool-card">
+                <div class="icon" style="background: #ecfdf5; color: #059669;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" /><path d="M14 2V8H20" /><path d="M8 18H15" /><path d="M16 16L18.8284 13.1716C19.219 12.781 19.219 12.1479 18.8284 11.7574L17.2426 10.1716C16.8521 9.78105 16.2189 9.78105 15.8284 10.1716L13 13L16 16Z" /></svg>
+                </div>
+                <div class="info">
+                    <h3>Firmar PDF</h3>
+                    <p>Añade tu firma digital fácilmente.</p>
+                </div>
+            </a>
+
+            <a href="comprimir.html" class="card tool-card">
+                <div class="icon" style="background: #fff7ed; color: #ea580c;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14h6v6"></path><path d="M20 10h-6V4"></path><path d="M14 10l7-7"></path><path d="M3 21l7-7"></path></svg>
+                </div>
+                <div class="info">
+                    <h3>Comprimir PDF</h3>
+                    <p>Reduce el tamaño de tus archivos.</p>
+                </div>
+            </a>
+
+            <a href="seguridad.html" class="card tool-card">
+                <div class="icon" style="background: #f0fdf4; color: #16a34a;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+                </div>
+                <div class="info">
+                    <h3>Proteger PDF</h3>
+                    <p>Cifra con contraseña segura.</p>
+                </div>
+            </a>
+
+            <a href="numerar.html" class="card tool-card">
+                <div class="icon" style="background: #f3f4f6; color: #374151;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M12 18h.01"></path><path d="M10 18h4"></path></svg>
+                </div>
+                <div class="info">
+                    <h3>Numerar Páginas</h3>
+                    <p>Agrega paginación automática.</p>
+                </div>
+            </a>
+
+            <a href="qr.html" class="card tool-card">
+                <div class="icon" style="background: #f5f3ff; color: #8b5cf6;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="5" height="5" x="3" y="3" rx="1" /><rect width="5" height="5" x="16" y="3" rx="1" /><rect width="5" height="5" x="3" y="16" rx="1" /><path d="M21 16h-3a2 2 0 0 0-2 2v3" /><path d="M21 21v.01" /><path d="M12 7v3a2 2 0 0 1-2 2H7" /><path d="M3 12h.01" /><path d="M12 3h.01" /><path d="M12 16v.01" /><path d="M16 12h1" /><path d="M21 12v.01" /><path d="M12 21v-1" /></svg>
+                </div>
+                <div class="info">
+                    <h3>Generador QR</h3>
+                    <p>Crea códigos QR al instante.</p>
+                </div>
+            </a>
+
+            <a href="compresor.html" class="card tool-card">
+                <div class="icon" style="background: #fffbeb; color: #f59e0b;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18" /><path d="m9 6 3-3 3 3" /><path d="m9 18 3 3 3-3" /><path d="M6 12h12" /></svg>
+                </div>
+                <div class="info">
+                    <h3>Comprimir Fotos</h3>
+                    <p>Reduce peso sin perder calidad.</p>
+                </div>
+            </a>
+
+            <div class="no-results" id="noResults">
+                <div style="font-size: 3rem; margin-bottom: 20px;">🕵️</div>
+                <h3>No encontramos esa herramienta</h3>
+                <p>Intenta buscar palabras clave como "PDF" o "Imagen".</p>
+            </div>
+
+        </div>
+    </div>
+
+    <section class="trust-section">
+        <h2 class="trust-title">La solución segura para tus PDF</h2>
+        <div class="trust-grid">
+            <div class="trust-item">
+                <div class="trust-icon-box">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <h4>Privacidad Garantizada</h4>
+                <p>Tus archivos <strong>nunca se suben a la nube</strong>. Todo el procesamiento ocurre localmente en tu navegador para máxima seguridad.</p>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon-box">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <h4>Velocidad Ultrarrápida</h4>
+                <p>Al no depender de servidores externos, la conversión es inmediata. Olvídate de los tiempos de carga y espera.</p>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon-box">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+                <h4>Gratis y Fácil</h4>
+                <p>Herramientas potentes con una interfaz amigable. Sin registros complicados ni instalaciones pesadas.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col" style="flex: 2;">
+                <div class="footer-brand">
+                    <i class="fa-solid fa-rocket"></i> ImaginA Tools
+                </div>
+                <p style="color: #9ca3af; font-size: 0.9rem; line-height: 1.6; max-width: 300px;">
+                    Tu suite de herramientas digitales para gestionar documentos de forma segura, privada y eficiente.
+                </p>
+            </div>
+
+            <div class="footer-col">
+                <h3>Herramientas</h3>
+                <ul class="footer-links">
+                    <li><a href="comprimir.html">Comprimir PDF</a></li>
+                    <li><a href="pdf.html">Unir PDFs</a></li>
+                    <li><a href="word.html">PDF a Word</a></li>
+                    <li><a href="imagenes.html">Editor Imágenes</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Desarrollado por</h3>
+                
+                <a href="https://dc-systems.netlify.app" target="_blank" style="text-decoration:none;">
+                    <div style="font-weight: 700; font-size: 1.1rem; color: #fff; margin-bottom: 5px;">
+                        DC Systems <span style="color: #4361ee;">●</span>
+                    </div>
+                </a>
+                
+                <p style="color: #9ca3af; font-size: 0.85rem; margin-bottom: 15px;">
+                    Soluciones tecnológicas y desarrollo web a medida.
+                </p>
+
+                <div class="social-buttons">
+                    <a href="https://wa.me/50372146941?text=Hola,%20vi%20tu%20herramienta%20ImaginA%20y%20me%20interesa%20un%20proyecto." 
+                       target="_blank" 
+                       class="social-btn wa"
+                       title="Contactar por WhatsApp">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </a>
+
+                    <a href="https://dc-systems.netlify.app" 
+                       target="_blank" 
+                       class="social-btn web"
+                       title="Visitar DC Systems">
+                        <i class="fa-solid fa-globe"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright">
+            &copy; 2026 ImaginA Tools. | <a href="https://dc-systems.netlify.app" style="color: inherit; text-decoration: none; font-weight: bold;">DC Systems</a>.
+        </div>
+    </footer>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const cards = document.querySelectorAll('.tool-card');
+        const noResults = document.getElementById('noResults');
+
+        searchInput.addEventListener('keyup', (e) => {
+            const term = e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            let hasResults = false;
+
+            cards.forEach(card => {
+                const title = card.querySelector('h3').innerText.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                const desc = card.querySelector('p').innerText.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+                if (title.includes(term) || desc.includes(term)) {
+                    card.style.display = "flex";
+                    hasResults = true;
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            noResults.style.display = hasResults ? 'none' : 'block';
+        });
+    </script>
+</body>
+</html>

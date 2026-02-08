@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fusionar PDFs - ImaginA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #e11d48;
+            --surface: #ffffff;
+            --bg-body: #fff1f2;
+            --text-main: #1f2937;
+        }
+        /* Tema Rojo para PDF */
+        body {
+            background-color: var(--bg-body);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding-bottom: 50px;
+        }
+
+        .navbar {
+            background: var(--surface);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .brand {
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .btn-back {
+            text-decoration: none;
+            color: #6b7280;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .btn-back:hover { color: var(--primary); }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .tool-card {
+            background: var(--surface);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            border-top: 5px solid var(--primary);
+        }
+
+        .upload-zone {
+            border: 2px dashed #fda4af;
+            background: #fff1f2;
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .upload-zone:hover {
+            border-color: var(--primary);
+            background: #ffe4e6;
+        }
+
+        .upload-zone input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .btn-action {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 30px;
+            font-size: 1rem;
+        }
+
+        .btn-action:hover { background: #be123c; }
+        
+        /* Estilo para deshabilitado */
+        .btn-action:disabled { background: #9ca3af; cursor: not-allowed; }
+    </style>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8845528388052409"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="brand">📄 ImaginA PDF</a>
+        <a href="index.html" class="btn-back">⬅ Volver al Menú</a>
+    </nav>
+
+    <div class="container">
+        <div class="tool-card">
+            <h1 style="margin-top:0;">🔗 Unir PDFs</h1>
+            <p style="color:#6b7280; margin-bottom:30px;">Combina varios documentos en un solo archivo.</p>
+
+            <div class="upload-zone">
+                <input type="file" id="pdfInput" accept=".pdf" multiple>
+                <div style="font-size: 2rem;">📎</div>
+                <strong id="uploadText" style="color: #e11d48;">Selecciona tus PDFs</strong>
+                <p style="font-size:0.8rem; margin-top:5px;">(Usa Ctrl para elegir varios)</p>
+            </div>
+
+            <button class="btn-action" id="mergeBtn">Fusionar Documentos 🚀</button>
+
+            <div id="result" style="text-align: center; display: none; margin-top: 20px;">
+                <a id="downloadLink" href="#" style="color: var(--primary); font-weight: bold;">⬇ Descargar PDF Unido</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/logic-pdf.js"></script>
+</body>
+</html>
