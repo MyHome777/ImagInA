@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marca de Agua - ImaginA Tools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { --primary: #4361ee; --primary-dark: #3a0ca3; --surface: #ffffff; --bg-body: #f8f9fa; --text-main: #1f2937; --text-light: #6b7280; --border: #e5e7eb; }
+        body { background-color: var(--bg-body); font-family: 'Inter', sans-serif; margin: 0; padding-bottom: 50px; color: var(--text-main); }
+        
+        /* Navbar (Consistente) */
+        .navbar { background: var(--surface); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .brand { font-weight: 800; color: var(--primary); text-decoration: none; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
+        .btn-back { text-decoration: none; color: var(--text-light); font-weight: 600; font-size: 0.9rem; transition: 0.2s; }
+        .btn-back:hover { color: var(--primary); }
+
+        /* Container & Card */
+        .container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        .tool-card { background: var(--surface); padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); }
+        
+        h1 { display: flex; align-items: center; gap: 12px; font-weight: 700; color: var(--text-main); margin-top: 0; }
+        .subtitle { color: var(--text-light); margin-bottom: 30px; }
+
+        /* Upload Zone */
+        .upload-zone { border: 2px dashed #cbd5e1; border-radius: 16px; padding: 30px; text-align: center; cursor: pointer; transition: 0.3s; position: relative; background: #f8fafc; margin-bottom: 25px; }
+        .upload-zone:hover { border-color: var(--primary); background: #eff6ff; }
+        .upload-zone input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+        .upload-preview { max-height: 200px; max-width: 100%; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); display: none; margin: 10px auto 0; }
+
+        /* Controls Section */
+        .config-section { margin-top: 30px; border-top: 1px solid var(--border); padding-top: 30px; }
+        .section-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; display: block; }
+
+        /* Tabs (Text vs Logo) */
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; background: #f1f5f9; padding: 5px; border-radius: 12px; width: fit-content; }
+        .tab-btn { flex: 1; padding: 10px 25px; border: none; background: transparent; cursor: pointer; font-weight: 600; color: var(--text-light); border-radius: 8px; transition: 0.2s; }
+        .tab-btn.active { background: var(--surface); color: var(--primary); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+
+        /* Inputs */
+        .form-control { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 10px; box-sizing: border-box; font-family: inherit; margin-bottom: 15px; }
+        .logo-upload-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: #eff6ff; color: var(--primary); border-radius: 10px; border: 1px solid #bfdbfe; cursor: pointer; width: 100%; justify-content: center; font-weight: 600; }
+
+        /* Position Grid Options */
+        .position-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px; }
+        .pos-card { border: 2px solid var(--border); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: 0.2s; }
+        .pos-card:hover { border-color: #bfdbfe; }
+        .pos-card.selected { border-color: var(--primary); background: #eff6ff; color: var(--primary); }
+        .pos-icon { display: block; margin: 0 auto 8px; width: 40px; height: 40px; background: #e2e8f0; border-radius: 8px; position: relative; }
+        
+        /* Icon visualization logic via CSS shapes inside SVG */
+        .pos-card.selected .pos-icon { background: #dbeafe; }
+
+        /* Corner Selector (Hidden by default) */
+        .corner-grid { display: none; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 200px; margin: 0 auto 20px; }
+        .corner-btn { padding: 15px; border: 2px solid var(--border); border-radius: 8px; cursor: pointer; background: var(--surface); }
+        .corner-btn:hover { background: #f8fafc; }
+        .corner-btn.selected { border-color: var(--primary); background: #eff6ff; }
+
+        /* Sliders */
+        .slider-group { display: flex; gap: 20px; margin-bottom: 20px; }
+        .slider-box { flex: 1; }
+        .slider-box label { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 5px; font-weight: 500; }
+        input[type=range] { width: 100%; cursor: pointer; accent-color: var(--primary); }
+
+        /* Button & Result */
+        .btn-action { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 1rem; display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 20px; transition: 0.2s; }
+        .btn-action:hover { background: var(--primary-dark); }
+        .btn-action:disabled { background: #9ca3af; cursor: not-allowed; }
+
+        #resultArea { margin-top: 30px; text-align: center; display: none; animation: fadeIn 0.5s ease; border-top: 1px solid var(--border); padding-top: 20px; }
+        .download-link { display: inline-flex; align-items: center; gap: 8px; color: var(--primary); font-weight: 700; text-decoration: none; padding: 10px 20px; background: #eff6ff; border-radius: 10px; transition: 0.2s; }
+        .download-link:hover { background: #dbeafe; transform: translateY(-2px); }
+
+        /* Modal Styles (mismos de antes) */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 1000; }
+        .modal-overlay.active { display: flex; }
+        .modal-container { background: white; padding: 30px; border-radius: 20px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+        .modal-icon { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; }
+        .modal-icon.error { background: #fee2e2; color: #ef4444; }
+        .modal-icon.success { background: #dcfce7; color: #22c55e; }
+        .btn-modal { background: var(--primary); color: white; border: none; padding: 10px 24px; border-radius: 10px; font-weight: 600; cursor: pointer; margin-top: 15px; width: 100%; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary)"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
+            ImaginA Tools
+        </a>
+        <a href="index.html" class="btn-back">⬅ Volver al Inicio</a>
+    </nav>
+
+    <div class="container">
+        <div class="tool-card">
+            <h1>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary)"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                Marca de Agua
+            </h1>
+            <p class="subtitle">Protege tus imágenes añadiendo tu logo o texto de forma profesional.</p>
+
+            <div class="upload-zone" id="mainUploadZone">
+                <input type="file" id="mainImageInput" accept="image/*">
+                <div id="mainUploadText">
+                    <div style="font-size: 2rem; color: var(--primary); display:flex; align-items:center; justify-content:center;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                    </div>
+                    <strong>Sube tu imagen aquí</strong>
+                    <div style="font-size: 0.85rem; color: #9ca3af; margin-top: 5px;">JPG, PNG o WebP</div>
+                </div>
+                <img id="mainImagePreview" class="upload-preview">
+            </div>
+
+            <div id="configPanel" class="config-section" style="display:none;">
+                
+                <span class="section-title">1. ¿Qué deseas añadir?</span>
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="setWatermarkType('text')">Texto</button>
+                    <button class="tab-btn" onclick="setWatermarkType('image')">Logo (Imagen)</button>
+                </div>
+
+                <div id="textInputGroup">
+                    <input type="text" id="watermarkText" class="form-control" placeholder="Escribe tu marca (ej: © ImaginA)" value="© ImaginA" style="margin-bottom: 12px;">
+                    
+                    <label for="textColor" style="display: block; font-size: 0.9rem; color: #475569; margin-bottom: 4px; font-weight: 500;">Color del texto:</label>
+                    
+                    <input type="color" id="textColor" class="form-control" style="height: 40px; padding: 2px; cursor: pointer;" value="#ffffff">
+                </div>
+
+                <div id="logoInputGroup" style="display:none;">
+                    <label class="logo-upload-btn">
+                        <input type="file" id="logoInput" accept="image/*" style="display:none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                        <span id="logoFileName">Subir Logo (PNG sin fondo)</span>
+                    </label>
+                </div>
+
+                <span class="section-title" style="margin-top:25px;">2. Elige el Estilo</span>
+                <div class="position-options">
+                    <div class="pos-card" id="optTiled" onclick="setPosMode('tiled')">
+                        <div class="pos-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" style="position:absolute; top:8px; left:8px;"><rect x="2" y="2" width="20" height="20" rx="2" stroke-dasharray="2 2"></rect><circle cx="8" cy="8" r="2"></circle><circle cx="16" cy="16" r="2"></circle><circle cx="16" cy="8" r="2"></circle><circle cx="8" cy="16" r="2"></circle></svg>
+                        </div>
+                        <strong>Mosaico</strong>
+                        <div style="font-size:0.75rem; color:#6b7280;">Repetir</div>
+                    </div>
+                    
+                    <div class="pos-card selected" id="optCenter" onclick="setPosMode('center')">
+                        <div class="pos-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4361ee" stroke-width="2" style="position:absolute; top:8px; left:8px;"><rect x="2" y="2" width="20" height="20" rx="2"></rect><circle cx="12" cy="12" r="3" fill="#dbeafe"></circle></svg>
+                        </div>
+                        <strong>Centro</strong>
+                        <div style="font-size:0.75rem; color:#6b7280;">Unico</div>
+                    </div>
+
+                    <div class="pos-card" id="optCorner" onclick="setPosMode('corner')">
+                        <div class="pos-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" style="position:absolute; top:8px; left:8px;"><rect x="2" y="2" width="20" height="20" rx="2"></rect><circle cx="18" cy="18" r="3"></circle></svg>
+                        </div>
+                        <strong>Esquina</strong>
+                        <div style="font-size:0.75rem; color:#6b7280;">Elegir</div>
+                    </div>
+                </div>
+
+                <div id="cornerSelector" class="corner-grid">
+                    <div class="corner-btn" onclick="setCorner('TL')" title="Arriba Izquierda">↖</div>
+                    <div class="corner-btn" onclick="setCorner('TR')" title="Arriba Derecha">↗</div>
+                    <div class="corner-btn" onclick="setCorner('BL')" title="Abajo Izquierda">↙</div>
+                    <div class="corner-btn selected" onclick="setCorner('BR')" title="Abajo Derecha">↘</div>
+                </div>
+
+                <span class="section-title">3. Ajustes Finales</span>
+                <div class="slider-group">
+                    <div class="slider-box">
+                        <label>Tamaño: <span id="sizeVal">20%</span></label>
+                        <input type="range" id="sizeRange" min="5" max="80" value="20">
+                    </div>
+
+                    <div class="slider-box" id="spacingBox" style="display: none;">
+                        <label>Espaciado: <span id="spacingVal">1.0x</span></label>
+                        <input type="range" id="spacingRange" min="0" max="300" value="100">
+                    </div>
+
+                    <div class="slider-box">
+                        <label>Opacidad: <span id="opacityVal">80%</span></label>
+                        <input type="range" id="opacityRange" min="10" max="100" value="80">
+                    </div>
+                </div>
+
+                <button class="btn-action" id="processBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    Procesar Imagen
+                </button>
+            </div>
+
+            <div id="resultArea">
+                <h3 style="margin-top:0;">¡Listo! Aquí tienes tu resultado:</h3>
+                <img id="resultPreview" style="max-width:100%; border-radius:12px; border:1px solid var(--border); margin-bottom:20px;">
+                <br>
+                <a id="downloadBtn" href="#" class="download-link" download="imagen_con_marca.png">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Descargar Imagen
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="customModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-icon error" id="modalIconError">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            </div>
+            <div class="modal-icon success" id="modalIconSuccess" style="display:none;">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            </div>
+            <h3 id="modalTitle">Mensaje</h3>
+            <p id="modalMessage">...</p>
+            <button onclick="closeModal()" class="btn-modal">Entendido</button>
+        </div>
+    </div>
+
+    <script src="js/marca-de-agua.js"></script>
+</body>
+</html>
