@@ -6,6 +6,12 @@
     <title>Marca de Agua - ImaginA Tools</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     
+    <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+    <link rel="shortcut icon" href="favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="favicon/site.webmanifest" />
+
     <style>
         :root { --primary: #4361ee; --primary-dark: #3a0ca3; --surface: #ffffff; --bg-body: #f8f9fa; --text-main: #1f2937; --text-light: #6b7280; --border: #e5e7eb; }
         body { background-color: var(--bg-body); font-family: 'Inter', sans-serif; margin: 0; padding-bottom: 50px; color: var(--text-main); }
@@ -83,6 +89,82 @@
         .btn-modal { background: var(--primary); color: white; border: none; padding: 10px 24px; border-radius: 10px; font-weight: 600; cursor: pointer; margin-top: 15px; width: 100%; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    
+        /* =========================================
+        RESPONSIVE DESIGN (MÓVILES Y TABLETS)
+        ========================================= */
+
+        @media (max-width: 768px) {
+        
+        /* 1. Ajustes generales del contenedor */
+        .container {
+            width: 95%;
+            padding: 15px;
+            margin: 0 auto;
+        }
+
+        /* 2. Tarjetas de Posición (Mosaico, Centro, Esquina) */
+        .position-options {
+            /* Forzamos a que sea 1 sola columna en lugar de 3 */
+            grid-template-columns: 1fr; 
+            gap: 12px;
+        }
+
+        .pos-card {
+            width: auto;   /* Ocupa todo el ancho de la columna */
+            padding: 20px; /* Un poco más alto para tocar mejor */
+        }
+
+        /* 3. Panel de Configuración */
+        .config-panel {
+            padding: 15px; /* Reducir padding interno para ganar espacio */
+        }
+
+        /* 4. Sliders y Controles */
+        .slider-group {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* Más separación vertical entre sliders */
+        }
+
+        .slider-box {
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+        /* 5. Inputs de Texto y Color */
+        #textInputGroup input[type="text"],
+        #textInputGroup input[type="color"] {
+            width: 100%;
+            font-size: 16px; /* Importante: 16px evita que el iPhone haga zoom al escribir */
+            height: 45px;    /* Altura cómoda para el dedo */
+        }
+
+        /* 6. Imagen de Resultado */
+        #resultPreview {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* 7. Botones de Acción (Procesar / Descargar) */
+        #processBtn, #downloadBtn {
+            width: 100%;     /* Botones de ancho completo */
+            padding: 16px;   /* Más altos para facilitar el tap */
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 8. Selector de Esquinas (Cuadrícula pequeña) */
+        #cornerSelector {
+            /* Aseguramos que quede centrado y accesible */
+            margin: 15px auto;
+            max-width: 200px; 
+        }
+}
     </style>
 </head>
 <body>
