@@ -2,183 +2,219 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>Fotos a PDF - ImaginA</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fotos a PDF - ImaginA Tools</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <style>
         :root {
-            --primary: #10b981;
-            --surface: #ffffff;
-            --bg: #ecfdf5;
-        }
-        /* Tema Esmeralda */
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+            /* TEMA AZUL */
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #eff6ff;
+            --text-main: #1e293b;
+            --text-sec: #64748b;
+            --border-color: #e2e8f0;
+            --bg-body: #f8fafc;
+            --radius-card: 24px;
+            --shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
         }
 
         body {
-            margin: 0;
             font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            padding-bottom: 40px;
+            background: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
+        /* NAVBAR */
         .navbar {
-            background: var(--surface);
-            padding: 15px 20px;
+            background: white;
+            padding: 16px 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-bottom: 1px solid var(--border-color);
         }
 
         .brand {
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            display: flex; align-items: center; gap: 8px;
+            text-decoration: none; font-weight: 700; font-size: 1.25rem; color: var(--primary-dark);
         }
+        .brand i { font-size: 1.5rem; }
 
         .btn-back {
-            text-decoration: none;
-            color: #6b7280;
-            font-size: 0.9rem;
+            text-decoration: none; color: var(--text-sec); font-weight: 500;
+            display: flex; align-items: center; gap: 6px; transition: 0.2s;
         }
+        .btn-back:hover { color: var(--primary); }
 
-        .container {
-            width: 92%;
-            max-width: 600px;
-            margin: 30px auto;
+        /* CONTENIDO PRINCIPAL */
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
         }
 
         .card {
-            background: var(--surface);
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
-            border-top: 4px solid var(--primary);
+            background: white;
+            width: 100%;
+            max-width: 700px;
+            padding: 48px;
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow-card);
+            text-align: center;
         }
 
-        .upload-zone {
-            border: 2px dashed #6ee7b7;
-            background: #ecfdf5;
-            border-radius: 12px;
-            padding: 40px 20px;
-            text-align: center;
-            position: relative;
-            margin-top: 20px;
+        h1 { margin: 0 0 12px 0; font-size: 2rem; color: var(--text-main); }
+        .subtitle { color: var(--text-sec); margin-bottom: 30px; font-size: 1.1rem; }
+
+        /* ZONA DE CARGA HERO */
+        .upload-hero {
+            border: 2px dashed var(--border-color);
+            background: var(--primary-light);
+            border-radius: 20px;
+            padding: 50px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .upload-hero:hover {
+            border-color: var(--primary);
+            background: #dbeafe;
+        }
+
+        .hero-icon {
+            font-size: 3.5rem; color: var(--primary); margin-bottom: 15px;
+            background: white; padding: 15px; border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .upload-text-main { font-weight: 700; font-size: 1.2rem; margin-bottom: 5px; }
+        .upload-text-sec { color: var(--text-sec); margin-bottom: 20px; font-size: 0.95rem; }
+
+        .btn-choose {
+            background: var(--primary); color: white; border: none;
+            padding: 10px 28px; border-radius: 50px; font-weight: 600;
+            font-size: 1rem; cursor: pointer; transition: 0.2s;
+        }
+        .btn-choose:hover { background: var(--primary-dark); transform: translateY(-2px); }
+
+        #filesInput { display: none; }
+
+        /* LISTA DE ARCHIVOS */
+        .file-list-container {
+            margin-top: 30px;
+            text-align: left;
+            display: none;
         }
         
-        .upload-zone:hover {
-            background: #d1fae5;
-        }
-
-        .upload-zone input {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .file-list {
-            margin-top: 20px;
-            text-align: left;
-        }
+        .list-title { font-size: 0.9rem; font-weight: 700; color: var(--text-sec); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
 
         .file-item {
-            background: #f3f4f6;
-            padding: 10px;
-            margin-bottom: 5px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 16px;
-            background: var(--primary);
-            color: white;
-            border: none;
+            background: var(--bg-body);
+            border: 1px solid var(--border-color);
+            padding: 12px 16px;
+            margin-bottom: 8px;
             border-radius: 12px;
-            font-weight: 700;
-            font-size: 1rem;
-            margin-top: 25px;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
-            transition: transform 0.1s;
-        }
-
-        .btn:active {
-            transform: scale(0.98);
-            opacity: 0.9;
+            display: flex; align-items: center; gap: 12px;
+            font-size: 0.95rem;
+            transition: 0.2s;
         }
         
-        .btn:disabled {
-            background-color: #9ca3af;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
+        .file-icon { color: var(--primary); font-size: 1.2rem; display: flex; align-items: center; }
 
+        /* BOTÓN DE ACCIÓN */
+        .btn-action-main {
+            width: 100%; border: none; padding: 18px; border-radius: 16px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white; font-weight: 700; font-size: 1.1rem; cursor: pointer;
+            margin-top: 30px; display: flex; justify-content: center; align-items: center; gap: 10px;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        .btn-action-main:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4); }
+        .btn-action-main:disabled { opacity: 0.7; cursor: wait; }
+
+        /* CAJA DE DESCARGA */
         .download-box {
-            margin-top: 20px;
-            text-align: center;
-            display: none;
-            padding: 15px;
-            background: #d1fae5;
-            border-radius: 10px;
-            border: 1px solid var(--primary);
+            margin-top: 25px; padding: 15px; 
+            background: #ecfdf5; border: 1px solid #a7f3d0; 
+            border-radius: 16px; display: none;
         }
 
         .download-link {
-            color: #047857;
-            text-decoration: none;
-            font-weight: 700;
-            display: block;
+            text-decoration: none; color: #059669; font-weight: 700;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+
+        .spinner { animation: spin 1s linear infinite; display: none; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        @media (max-width: 600px) {
+            .card { padding: 30px 20px; }
+            h1 { font-size: 1.75rem; }
         }
     </style>
-
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8845528388052409"
-     crossorigin="anonymous"></script>
 </head>
 <body>
+
     <nav class="navbar">
-        <a href="index.html" class="brand">📸 Foto → PDF</a>
-        <a href="index.html" class="btn-back">✕ Salir</a>
+        <a href="index.html" class="brand">
+            <i class="ph-fill ph-images-square"></i> ImaginA Tools
+        </a>
+        <a href="index.html" class="btn-back">
+            <i class="ph-bold ph-arrow-left"></i> Volver
+        </a>
     </nav>
 
-    <div class="container">
+    <div class="main-content">
         <div class="card">
-            <h1 style="margin:0; font-size:1.5rem; color:#1f2937;">Crear Álbum PDF</h1>
-            <p style="color:#6b7280; font-size:0.95rem;">Convierte tus fotos en un documento.</p>
+            <h1>Fotos a PDF</h1>
+            <p class="subtitle">Convierte tus imágenes en un documento profesional al instante.</p>
 
-            <div class="upload-zone">
+            <div class="upload-hero" id="dropZone" onclick="document.getElementById('filesInput').click()">
+                <div class="hero-icon">
+                    <i class="ph-duotone ph-image"></i>
+                </div>
+                <div class="upload-text-main">Sube tus fotos aquí</div>
+                <div class="upload-text-sec">PNG, JPG o JPEG (Puedes elegir varias)</div>
+                <button class="btn-choose">Seleccionar Imágenes</button>
                 <input type="file" id="filesInput" accept="image/png, image/jpeg, image/jpg" multiple>
-                <div style="font-size: 2rem;">🖼️</div>
-                <strong style="color: #10b981;">Toca para elegir fotos</strong>
-                <div style="font-size: 0.8rem; color: #6b7280; margin-top:5px;">(Puedes elegir varias)</div>
             </div>
 
-            <div id="fileList" class="file-list"></div>
-
-            <button class="btn" id="convertBtn">Convertir a PDF 🚀</button>
+            <div id="fileListContainer" class="file-list-container">
+                <div class="list-title">Imágenes seleccionadas:</div>
+                <div id="fileList"></div>
+                
+                <button class="btn-action-main" id="convertBtn">
+                    <span id="btnText">Convertir a PDF</span>
+                    <i class="ph-bold ph-file-pdf"></i>
+                    <i class="ph-bold ph-spinner spinner" id="btnSpinner"></i>
+                </button>
+            </div>
 
             <div id="result" class="download-box">
-                <a id="downloadLink" class="download-link" href="#" download>⬇ Descargar PDF Listo</a>
+                <a id="downloadLink" class="download-link" href="#" download>
+                    <i class="ph-bold ph-check-circle"></i> Descargar Documento PDF
+                </a>
             </div>
+
         </div>
     </div>
 

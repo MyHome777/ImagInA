@@ -1,100 +1,154 @@
-// Esperamos a que la librería cargue
+// Esperamos a que la librería jsPDF esté disponible globalmente
 const { jsPDF } = window.jspdf;
 
-// 1. Referencias al DOM (Elementos HTML)
+// Referencias a elementos del DOM
 const input = document.getElementById('filesInput');
+const dropZone = document.getElementById('dropZone');
 const listContainer = document.getElementById('fileList');
+const listWrapper = document.getElementById('fileListContainer');
 const convertBtn = document.getElementById('convertBtn');
+const btnText = document.getElementById('btnText');
+const btnSpinner = document.getElementById('btnSpinner');
 const resultBox = document.getElementById('result');
 const downloadLink = document.getElementById('downloadLink');
 
-// Variable para guardar los archivos seleccionados
+// Variable para almacenar los archivos seleccionados
 let selectedFiles = [];
 
-// 2. Escuchar cuando el usuario elige fotos
-input.addEventListener('change', function() {
-    listContainer.innerHTML = ""; // Limpiar lista anterior
-    selectedFiles = Array.from(this.files); // Convertir a Array real
+// --- EVENTOS DRAG & DROP ---
 
-    if(selectedFiles.length > 0) {
-        // Ocultar resultado anterior si hay uno
-        resultBox.style.display = 'none';
-        
-        // Mostrar lista de archivos visualmente
-        selectedFiles.forEach(file => {
-            let div = document.createElement('div');
-            div.className = 'file-item';
-            div.innerHTML = `<span>📷</span> ${file.name}`;
-            listContainer.appendChild(div);
-        });
+// Al arrastrar sobre la zona
+dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.style.borderColor = 'var(--primary)';
+    dropZone.style.background = '#eff6ff'; // Azul muy claro
+});
+
+// Al salir de la zona
+dropZone.addEventListener('dragleave', () => {
+    dropZone.style.borderColor = 'var(--border-color)';
+    dropZone.style.background = 'var(--primary-light)';
+});
+
+// Al soltar los archivos
+dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.style.borderColor = 'var(--border-color)';
+    dropZone.style.background = 'var(--primary-light)';
+    
+    if (e.dataTransfer.files.length) {
+        handleFiles(e.dataTransfer.files);
     }
 });
 
-// 3. Escuchar el click en "Convertir"
+// --- EVENTO DE SELECCIÓN MANUAL ---
+input.addEventListener('change', function() {
+    if (this.files.length) {
+        handleFiles(this.files);
+    }
+});
+
+// --- FUNCIÓN PARA PROCESAR LOS ARCHIVOS ---
+function handleFiles(files) {
+    selectedFiles = Array.from(files);
+    listContainer.innerHTML = ""; // Limpiar lista visual anterior
+    resultBox.style.display = 'none'; // Ocultar caja de descarga si había una
+
+    if (selectedFiles.length > 0) {
+        // Mostrar el contenedor de la lista y el botón
+        listWrapper.style.display = 'block';
+
+        // Crear elementos visuales para cada archivo
+        selectedFiles.forEach(file => {
+            let div = document.createElement('div');
+            div.className = 'file-item';
+            div.innerHTML = `
+                <div class="file-icon"><i class="ph-fill ph-image"></i></div>
+                <div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; width:100%;">
+                    ${file.name}
+                </div>
+            `;
+            listContainer.appendChild(div);
+        });
+    }
+}
+
+// --- LÓGICA DE CONVERSIÓN A PDF ---
 convertBtn.addEventListener('click', async function() {
     if (selectedFiles.length === 0) {
         alert("Por favor, selecciona al menos una foto.");
         return;
     }
 
-    // Cambiar estado del botón (Feedback visual)
-    const originalText = convertBtn.innerText;
-    convertBtn.innerText = "Procesando imágenes... ⏳";
+    // Cambiar estado visual del botón (Loading)
+    const originalBtnText = btnText.innerText;
+    btnText.innerText = "Generando PDF...";
     convertBtn.disabled = true;
+    btnSpinner.style.display = 'block';
+    
+    // Ocultar icono del PDF temporalmente
+    const pdfIcon = document.querySelector('.ph-file-pdf');
+    if(pdfIcon) pdfIcon.style.display = 'none';
 
     try {
-        // --- INICIO DEL MOTOR DE PDF (Reemplazo del Backend) ---
-        
-        // Crear documento PDF (A4, mm, vertical)
+        // Pequeño timeout para permitir que la UI se renderice antes de bloquear el hilo
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        // Inicializar documento PDF (A4 Vertical, mm)
         const doc = new jsPDF('p', 'mm', 'a4');
         const pageWidth = 210;
         const pageHeight = 297;
         const margin = 10;
 
-        // Recorrer cada archivo seleccionado
         for (let i = 0; i < selectedFiles.length; i++) {
             const file = selectedFiles[i];
             
-            // Convertir la imagen a un formato que JS entienda (Base64)
+            // Leer archivo como Base64
             const imgData = await readFileAsBase64(file);
             
-            // Calcular dimensiones para que la foto quepa bien en la hoja A4
+            // Obtener propiedades de la imagen para mantener la proporción
             const imgProps = doc.getImageProperties(imgData);
+            
+            // Calcular ancho y alto ajustado al ancho de página (menos márgenes)
             const pdfWidth = pageWidth - (margin * 2);
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-            // Si es la segunda foto o más, añadimos una página nueva
+            // Si no es la primera imagen, añadir nueva página
             if (i > 0) doc.addPage();
-
-            // Dibujar la imagen en el PDF
-            // (imagen, formato, x, y, ancho, alto)
+            
+            // Dibujar imagen (tipo JPEG/PNG se detecta automáticamente o se fuerza)
+            // Se usa 'JPEG' como alias genérico en jsPDF para compresión, pero soporta PNG transparente
             doc.addImage(imgData, 'JPEG', margin, margin, pdfWidth, pdfHeight);
         }
 
-        // Guardar el PDF como un "Blob" (archivo en memoria)
+        // Generar Blob y URL
         const pdfBlob = doc.output('blob');
         const pdfUrl = URL.createObjectURL(pdfBlob);
 
-        // --- FIN DEL MOTOR ---
-
-        // Configurar el botón de descarga
+        // Mostrar resultado
         downloadLink.href = pdfUrl;
         downloadLink.download = "Album_ImaginaTools.pdf";
-        
-        // Mostrar la cajita verde de descarga
-        resultBox.style.display = 'block';
+        resultBox.style.display = 'block'; // Mostrar caja verde
+        btnText.innerText = "¡PDF Creado!";
 
     } catch (error) {
         console.error(error);
-        alert("Ocurrió un error al procesar las imágenes. Intenta con menos fotos.");
+        alert("Ocurrió un error. Intenta con imágenes estándar (JPG, PNG).");
+        btnText.innerText = "Intentar de nuevo";
     } finally {
-        // Restaurar el botón original
-        convertBtn.innerText = originalText;
+        // Restaurar estado del botón
         convertBtn.disabled = false;
+        btnSpinner.style.display = 'none';
+        if(pdfIcon) pdfIcon.style.display = 'block';
+        
+        // Si falló o si se quiere permitir otro intento, restaurar texto original si no es éxito
+        if(btnText.innerText !== "¡PDF Creado!") {
+            btnText.innerText = originalBtnText;
+        }
     }
 });
 
-// Función auxiliar para leer el archivo como datos (Promesa)
+// Función auxiliar para leer archivos como DataURL (Base64)
 function readFileAsBase64(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
