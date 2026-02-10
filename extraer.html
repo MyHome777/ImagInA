@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraer Páginas - ImaginA Tools</title>
+    
+    <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        :root {
+            /* Paleta Azul basada en 'Editor Masivo' */
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #eff6ff; /* Fondo azul muy claro */
+            --text-main: #1e293b;
+            --text-sec: #64748b;
+            --border-color: #e2e8f0;
+            --bg-body: #f8fafc;
+            --radius-card: 24px;
+            --shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* NAVBAR SUPERIOR (Idéntica a tus fotos) */
+        .navbar {
+            background: white;
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .brand {
+            display: flex; align-items: center; gap: 8px;
+            text-decoration: none; font-weight: 700; font-size: 1.25rem; color: var(--primary-dark);
+        }
+        .brand i { font-size: 1.5rem; }
+
+        .btn-back {
+            text-decoration: none; color: var(--text-sec); font-weight: 500;
+            display: flex; align-items: center; gap: 6px; transition: 0.2s;
+        }
+        .btn-back:hover { color: var(--primary); }
+
+        /* CONTENEDOR CENTRAL */
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        /* TARJETA ESTILO TUS REFERENCIAS */
+        .card {
+            background: white;
+            width: 100%;
+            max-width: 800px; /* Ancho amplio como en las fotos */
+            padding: 48px;
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow-card);
+            text-align: center;
+        }
+
+        h1 { margin: 0 0 12px 0; font-size: 2rem; color: var(--text-main); }
+        .subtitle { color: var(--text-sec); margin-bottom: 40px; font-size: 1.1rem; }
+
+        /* ZONA DE CARGA HERO (Como en 'Remover Fondo') */
+        .upload-hero {
+            border: 2px dashed var(--border-color);
+            background: var(--primary-light);
+            border-radius: 20px;
+            padding: 60px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .upload-hero:hover, .upload-hero.dragover {
+            border-color: var(--primary);
+            background: #dbeafe;
+        }
+
+        /* Icono central grande */
+        .hero-icon {
+            font-size: 4rem; color: var(--primary); margin-bottom: 20px;
+            background: white; padding: 20px; border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .upload-text-main { font-weight: 700; font-size: 1.25rem; margin-bottom: 8px; }
+        .upload-text-sec { color: var(--text-sec); margin-bottom: 25px; }
+
+        /* Botón dentro de la zona de carga */
+        .btn-choose {
+            background: var(--primary); color: white; border: none;
+            padding: 12px 32px; border-radius: 50px; font-weight: 600;
+            font-size: 1rem; cursor: pointer; transition: 0.2s;
+        }
+        .btn-choose:hover { background: var(--primary-dark); transform: translateY(-2px); }
+        
+        #pdfInput { display: none; }
+
+        /* ESTADO: ARCHIVO CARGADO */
+        .upload-hero.has-file .hero-icon { color: #059669; }
+        .file-info-display { display: none; margin-top: 20px; font-weight: 600; color: var(--primary-dark); }
+        .upload-hero.has-file .file-info-display { display: block; }
+
+        /* SECCIÓN DE CONTROLES (Aparece abajo) */
+        .controls-section {
+            margin-top: 40px;
+            text-align: left;
+            display: none; /* Oculto al inicio */
+            animation: slideUp 0.3s ease-out;
+        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .input-label { display: block; font-weight: 600; margin-bottom: 10px; color: var(--text-main); }
+        
+        .modern-input {
+            width: 100%; padding: 14px 18px; border: 1px solid var(--border-color);
+            border-radius: 12px; font-size: 1rem; outline: none; transition: 0.2s;
+            font-family: 'Inter', sans-serif; background: var(--bg-body);
+        }
+        .modern-input:focus { border-color: var(--primary); background: white; }
+
+        /* BOTÓN DE ACCIÓN PRINCIPAL (Grande abajo) */
+        .btn-action-main {
+            width: 100%; border: none; padding: 18px; border-radius: 16px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white; font-weight: 700; font-size: 1.1rem; cursor: pointer;
+            margin-top: 30px; display: flex; justify-content: center; align-items: center; gap: 10px;
+            transition: 0.3s;
+        }
+        .btn-action-main:hover { transform: translateY(-2px); box-shadow: 0 8px 20px -5px rgba(59, 130, 246, 0.4); }
+        .btn-action-main:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+        .spinner { animation: spin 1s linear infinite; display: none; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* DESCARGA */
+        .download-box {
+            margin-top: 30px; padding: 20px; background: #ecfdf5;
+            border: 1px solid #a7f3d0; border-radius: 16px; display: none;
+        }
+        .download-link {
+            text-decoration: none; color: #059669; font-weight: 700;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+
+        @media (max-width: 600px) {
+            .card { padding: 30px 20px; }
+            .upload-hero { padding: 40px 20px; }
+            h1 { font-size: 1.75rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="brand">
+            <i class="ph-fill ph-rocket-launch"></i> ImaginA Tools
+        </a>
+        <a href="index.html" class="btn-back">
+            <i class="ph-bold ph-arrow-left"></i> Volver
+        </a>
+    </nav>
+
+    <div class="main-content">
+        <div class="card">
+            <h1>Extraer Páginas PDF</h1>
+            <p class="subtitle">Selecciona un archivo y conserva solo las páginas que necesitas.</p>
+
+            <div class="upload-hero" id="dropZone">
+                <input type="file" id="pdfInput" accept=".pdf">
+                
+                <div class="hero-icon" id="heroIcon">
+                    <i class="ph-duotone ph-cloud-arrow-up"></i>
+                </div>
+                
+                <div id="uploadPrompt">
+                    <div class="upload-text-main">Arrastra tu documento PDF aquí</div>
+                    <div class="upload-text-sec">o haz clic en el botón para buscar</div>
+                    <button class="btn-choose" onclick="document.getElementById('pdfInput').click()">Elegir Archivo</button>
+                </div>
+
+                <div class="file-info-display" id="fileInfo"></div>
+            </div>
+
+            <div class="controls-section" id="controlsSection">
+                <div class="input-group">
+                    <label class="input-label">Páginas a extraer (Ej: 1, 3-5, 10)</label>
+                    <input type="text" id="pagesInput" class="modern-input" placeholder="Introduce los números o rangos...">
+                </div>
+
+                <button class="btn-action-main" id="btnProcesar" onclick="extraerPdf()">
+                    <span id="btnText">Procesar Documento</span>
+                    <i class="ph-bold ph-scissors"></i>
+                    <i class="ph-bold ph-spinner spinner" id="btnSpinner"></i>
+                </button>
+            </div>
+
+            <div id="downloadSection" class="download-box">
+                <a id="downloadLink" class="download-link" href="#" download>
+                    <i class="ph-bold ph-check-circle"></i> Descargar PDF Extraído
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const pdfInput = document.getElementById('pdfInput');
+        const controlsSection = document.getElementById('controlsSection');
+        const fileInfo = document.getElementById('fileInfo');
+        const heroIcon = document.getElementById('heroIcon');
+        const uploadPrompt = document.getElementById('uploadPrompt');
+        
+        let currentFile = null;
+
+        // --- EVENTOS DRAG & DROP ---
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            if(e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+        });
+
+        pdfInput.addEventListener('change', (e) => {
+            if(e.target.files.length) handleFile(e.target.files[0]);
+        });
+
+        // --- MANEJO DEL ARCHIVO ---
+        async function handleFile(file) {
+            if (file.type !== 'application/pdf') return alert('Por favor, sube solo archivos PDF.');
+            
+            currentFile = file;
+            
+            // 1. Cambiar estado visual de la zona de carga
+            dropZone.classList.add('has-file');
+            heroIcon.innerHTML = '<i class="ph-duotone ph-file-pdf" style="color:#3b82f6"></i>'; // Icono PDF Azul
+            uploadPrompt.style.display = 'none'; // Ocultar el prompt inicial
+
+            // 2. Leer info del PDF y mostrarla
+            fileInfo.innerHTML = `Analizando ${file.name}... <i class="ph-bold ph-spinner spinner" style="display:inline-block; color:var(--primary)"></i>`;
+            
+            try {
+                const buffer = await file.arrayBuffer();
+                const doc = await PDFLib.PDFDocument.load(buffer);
+                const count = doc.getPageCount();
+                
+                fileInfo.innerHTML = `✅ ${file.name} <span style="color:var(--text-sec)">(${count} páginas)</span>`;
+                
+                // 3. Mostrar la sección de controles debajo
+                controlsSection.style.display = 'block';
+                document.getElementById('downloadSection').style.display = 'none';
+                
+            } catch (e) {
+                fileInfo.innerText = "Error al leer el archivo PDF.";
+                console.error(e);
+            }
+        }
+
+        // --- LÓGICA DE EXTRACCIÓN ---
+        async function extraerPdf() {
+            const pagesStr = document.getElementById('pagesInput').value;
+            const btn = document.getElementById('btnProcesar');
+            const btnText = document.getElementById('btnText');
+            const btnSpinner = document.getElementById('btnSpinner');
+
+            if (!pagesStr) return alert("Por favor indica las páginas a extraer.");
+
+            // UI Loading
+            btn.disabled = true;
+            btnText.innerText = "Procesando...";
+            btnSpinner.style.display = 'block';
+
+            try {
+                const buffer = await currentFile.arrayBuffer();
+                const pdfSrc = await PDFLib.PDFDocument.load(buffer);
+                const totalPages = pdfSrc.getPageCount();
+
+                // Parsear páginas
+                const indices = [];
+                pagesStr.split(',').forEach(p => {
+                    p = p.trim();
+                    if(p.includes('-')) {
+                        const [start, end] = p.split('-').map(Number);
+                        if(start && end) {
+                            for(let i=start; i<=Math.min(end, totalPages); i++) indices.push(i-1);
+                        }
+                    } else {
+                        const num = parseInt(p);
+                        if(num && num <= totalPages) indices.push(num-1);
+                    }
+                });
+                
+                const uniqueIndices = [...new Set(indices)].sort((a,b)=>a-b);
+                if(uniqueIndices.length === 0) throw new Error("Selección de páginas inválida.");
+
+                // Crear nuevo PDF
+                const pdfNew = await PDFLib.PDFDocument.create();
+                const copiedPages = await pdfNew.copyPages(pdfSrc, uniqueIndices);
+                copiedPages.forEach(page => pdfNew.addPage(page));
+
+                const pdfBytes = await pdfNew.save();
+                const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                const url = URL.createObjectURL(blob);
+
+                // Mostrar descarga
+                const link = document.getElementById('downloadLink');
+                link.href = url;
+                link.download = `Extraido_${currentFile.name}`;
+                document.getElementById('downloadSection').style.display = 'block';
+                
+                btnText.innerText = "¡Completado!";
+
+            } catch (err) {
+                alert("Error: " + err.message);
+                btnText.innerText = "Procesar Documento";
+            } finally {
+                btn.disabled = false;
+                btnSpinner.style.display = 'none';
+                if(btnText.innerText !== "¡Completado!") btnText.innerText = "Procesar Documento";
+            }
+        }
+    </script>
+</body>
+</html>
