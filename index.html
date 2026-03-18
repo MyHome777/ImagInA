@@ -886,30 +886,35 @@ document.getElementById('searchInput').addEventListener('input',function(){
 });
 
 /* ── TOUCH ANIMATION: play icon animation on tap, then navigate ── */
+/* ── TOUCH ANIMATION: tap → animación → navegar (no bloquea scroll) ── */
 document.querySelectorAll('.tool-card').forEach(card => {
   const href = card.getAttribute('href');
-  card.addEventListener('touchstart', function(e) {
-    // Prevent default to stop immediate navigation
-    e.preventDefault();
-    // Remove touched from any other card
-    document.querySelectorAll('.tool-card.touched').forEach(c => c.classList.remove('touched'));
-    this.classList.add('touched');
-    // Also trigger the icon container animation
-    const icon = this.querySelector('.tool-icon');
-    if (icon) {
-      icon.style.transform = 'scale(1.12) rotate(5deg)';
-      const before = icon.querySelector('::before'); // won't work, use class
-    }
-  }, { passive: false });
+  let startY = 0, startX = 0, moved = false;
+
+  card.addEventListener('touchstart', e => {
+    startY = e.touches[0].clientY;
+    startX = e.touches[0].clientX;
+    moved  = false;
+  }, { passive: true }); // passive:true = no bloquea scroll
+
+  card.addEventListener('touchmove', e => {
+    if (Math.abs(e.touches[0].clientY - startY) > 8 ||
+        Math.abs(e.touches[0].clientX - startX) > 8) moved = true;
+  }, { passive: true });
 
   card.addEventListener('touchend', function(e) {
+    if (moved) return; // fue scroll, no tap
     e.preventDefault();
+    document.querySelectorAll('.tool-card.touched').forEach(c => c.classList.remove('touched'));
+    this.classList.add('touched');
+    const icon = this.querySelector('.tool-icon');
+    if (icon) icon.style.transform = 'scale(1.12) rotate(5deg)';
     const self = this;
-    // Wait for animation to be visible (280ms), then navigate
     setTimeout(() => {
       self.classList.remove('touched');
+      if (icon) icon.style.transform = '';
       window.location.href = href;
-    }, 320);
+    }, 300);
   });
 });
 </script>
