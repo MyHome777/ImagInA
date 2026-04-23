@@ -1,6 +1,7 @@
 {
-  "name": "MyWebSite",
-  "short_name": "MySite",
+  "name": "Pulpi Tools",
+  "short_name": "PulpiTools",
+  "description": "Herramientas PDF e imagen, todo en tu navegador.",
   "icons": [
     {
       "src": "/favicon/web-app-manifest-192x192.png",
@@ -17,5 +18,6 @@
   ],
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
-  "display": "standalone"
+  "display": "standalone",
+  "start_url": "/index.html"
 }

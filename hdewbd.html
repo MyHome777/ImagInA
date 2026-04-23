@@ -1,0 +1,224 @@
+<!-- ═══════════════════════════════════════════════
+     MÓDULO PWA — Install prompt + navbar button
+     Pegar justo antes de los <script> al final del body
+     ═══════════════════════════════════════════════ -->
+
+<!-- MODAL DE INSTALACIÓN -->
+<div id="pwaModal" style="
+  position:fixed;inset:0;z-index:1000;
+  background:rgba(0,0,0,.52);backdrop-filter:blur(5px);
+  display:none;align-items:flex-end;justify-content:center;
+  padding-bottom:24px;
+  animation:pwaFadeIn .22s ease;
+">
+  <div id="pwaCard" style="
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:22px;width:100%;max-width:420px;
+    padding:28px 24px 24px;
+    box-shadow:0 24px 60px rgba(0,0,0,.22);
+    animation:pwaSlideUp .3s cubic-bezier(.34,1.3,.64,1);
+    position:relative;
+  ">
+    <!-- X cerrar -->
+    <button onclick="pwaDismiss()" style="
+      position:absolute;top:14px;right:14px;
+      width:28px;height:28px;border-radius:7px;
+      border:none;background:var(--surface-2);
+      cursor:pointer;color:var(--text-3);
+      display:flex;align-items:center;justify-content:center;
+      font-size:.8rem;transition:all .15s;
+    " onmouseover="this.style.background='var(--border)'" onmouseout="this.style.background='var(--surface-2)'">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <!-- Contenido -->
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+      <div style="
+        width:56px;height:56px;border-radius:14px;
+        background:var(--accent);flex-shrink:0;
+        display:flex;align-items:center;justify-content:center;
+        box-shadow:0 6px 18px rgba(109,40,217,.3);
+      ">
+        <!-- Pulpo SVG -->
+        <svg width="32" height="32" viewBox="0 0 38 38" fill="none">
+          <ellipse cx="19" cy="16" rx="10" ry="10.5" fill="#c4b5fd"/>
+          <circle cx="14.5" cy="14" r="3.5" fill="white"/>
+          <circle cx="23.5" cy="14" r="3.5" fill="white"/>
+          <circle cx="15.3" cy="14.8" r="2.1" fill="#3b0764"/>
+          <circle cx="24.3" cy="14.8" r="2.1" fill="#3b0764"/>
+          <circle cx="16.1" cy="13.8" r=".9" fill="white"/>
+          <circle cx="25.1" cy="13.8" r=".9" fill="white"/>
+          <path d="M16 19.5 Q19 22 22 19.5" stroke="#3b0764" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+          <path d="M10 25.5 Q8.5 29.5 8 34" stroke="#a78bfa" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+          <path d="M13.5 26.5 Q12.5 30.5 12 35" stroke="#c4b5fd" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+          <path d="M19 27 Q19 31 19 35.5" stroke="#a78bfa" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+          <path d="M24.5 26.5 Q25.5 30.5 26 35" stroke="#c4b5fd" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+          <path d="M28 25.5 Q29.5 29.5 30 34" stroke="#a78bfa" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
+      <div>
+        <div style="font-size:1rem;font-weight:700;color:var(--text);letter-spacing:-.02em;">Pulpi<span style="color:var(--accent)">Tools</span></div>
+        <div style="font-size:.78rem;color:var(--text-3);margin-top:2px;">imagina-tools.netlify.app</div>
+      </div>
+    </div>
+
+    <div style="font-size:.9rem;font-weight:600;color:var(--text);margin-bottom:6px;">
+      Instala la app para acceso rápido
+    </div>
+    <div style="font-size:.82rem;color:var(--text-2);line-height:1.6;margin-bottom:20px;">
+      Abre PulpiTools como una app nativa. Sin navegador, sin distracciones. Funciona sin conexión.
+    </div>
+
+    <div style="display:flex;gap:10px;">
+      <button onclick="pwaDismiss()" style="
+        flex:1;padding:10px;border-radius:9px;
+        border:1.5px solid var(--border-2);background:transparent;
+        font-family:'Inter',sans-serif;font-size:.86rem;font-weight:600;
+        color:var(--text-2);cursor:pointer;transition:all .18s;
+      " onmouseover="this.style.background='var(--surface-2)'" onmouseout="this.style.background='transparent'">
+        Ahora no
+      </button>
+      <button id="pwaInstallBtn" onclick="pwaInstall()" style="
+        flex:2;padding:10px;border-radius:9px;border:none;
+        background:var(--accent);color:#fff;
+        font-family:'Inter',sans-serif;font-size:.86rem;font-weight:700;
+        cursor:pointer;
+        box-shadow:0 2px 10px rgba(109,40,217,.28);
+        display:flex;align-items:center;justify-content:center;gap:8px;
+        transition:background .15s,box-shadow .15s;
+      " onmouseover="this.style.background='var(--accent-l)'" onmouseout="this.style.background='var(--accent)'">
+        <i class="fa-solid fa-download"></i> Instalar app
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+@keyframes pwaFadeIn   { from{opacity:0} to{opacity:1} }
+@keyframes pwaSlideUp  { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+/* Botón instalar en navbar */
+#pwaNavBtn {
+  display:none; /* JS lo muestra si aplica */
+  width:34px;height:34px;border-radius:8px;
+  border:1px solid var(--border);background:var(--surface-2);
+  align-items:center;justify-content:center;
+  cursor:pointer;color:var(--text-2);font-size:.85rem;
+  transition:all .18s;
+}
+#pwaNavBtn:hover { background:var(--accent-bg);color:var(--accent);border-color:var(--accent-bd); }
+</style>
+
+<script>
+/* ── PWA Install Module ── */
+(function () {
+  const STORAGE_KEY = 'pulpi_pwa_dismissed';
+  let deferredPrompt = null;
+  let isInstalled = false;
+
+  // Detectar si ya está instalada
+  if (window.matchMedia('(display-mode: standalone)').matches
+      || window.navigator.standalone === true) {
+    isInstalled = true;
+  }
+
+  // Capturar el evento beforeinstallprompt (Chrome/Edge/Android)
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    deferredPrompt = e;
+
+    if (!isInstalled) {
+      showNavBtn();
+      // Mostrar modal solo si nunca lo ha descartado
+      if (!localStorage.getItem(STORAGE_KEY)) {
+        // Pequeño delay para que la página cargue primero
+        setTimeout(showModal, 1800);
+      }
+    }
+  });
+
+  // Si se instala desde el modal u otro lugar, ocultar todo
+  window.addEventListener('appinstalled', function () {
+    isInstalled = true;
+    hideModal();
+    hideNavBtn();
+  });
+
+  // ── Funciones públicas ──
+
+  window.pwaDismiss = function () {
+    localStorage.setItem(STORAGE_KEY, '1');
+    hideModal();
+    showNavBtn(); // Sigue apareciendo el botón en navbar
+  };
+
+  window.pwaInstall = async function () {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const result = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    if (result.outcome === 'accepted') {
+      isInstalled = true;
+      hideModal();
+      hideNavBtn();
+    } else {
+      hideModal();
+      showNavBtn();
+    }
+  };
+
+  // El botón del navbar también abre el prompt
+  window.pwaNavInstall = function () {
+    if (deferredPrompt) {
+      pwaInstall();
+    } else {
+      // Fallback: mostrar instrucciones si el prompt ya se usó o no disponible
+      showModal();
+    }
+  };
+
+  function showModal() {
+    if (isInstalled) return;
+    const m = document.getElementById('pwaModal');
+    if (m) { m.style.display = 'flex'; }
+  }
+
+  function hideModal() {
+    const m = document.getElementById('pwaModal');
+    if (m) {
+      m.style.opacity = '0';
+      m.style.transition = 'opacity .2s';
+      setTimeout(function () { m.style.display = 'none'; m.style.opacity = ''; m.style.transition = ''; }, 200);
+    }
+  }
+
+  function showNavBtn() {
+    if (isInstalled) return;
+    const btn = document.getElementById('pwaNavBtn');
+    if (btn) btn.style.display = 'flex';
+  }
+
+  function hideNavBtn() {
+    const btn = document.getElementById('pwaNavBtn');
+    if (btn) btn.style.display = 'none';
+  }
+
+  // Cerrar modal al clicar fuera
+  document.getElementById('pwaModal').addEventListener('click', function (e) {
+    if (e.target === this) pwaDismiss();
+  });
+
+  // theme-color dinámico según modo oscuro
+  function updateThemeColor() {
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const meta = document.getElementById('themeColorMeta');
+    if (meta) meta.setAttribute('content', dark ? '#1c1c1e' : '#ffffff');
+  }
+  // Observar cambios en data-theme
+  new MutationObserver(updateThemeColor)
+    .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  updateThemeColor(); // ejecutar al cargar
+
+})();
+</script>
+
