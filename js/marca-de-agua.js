@@ -1,6 +1,6 @@
 /**
  * MARCA DE AGUA - LÓGICA DEL CLIENTE
- * Autor: ImaginA Tools
+ * Autor: PulpiTools
  * Versión: 2.0 (Con control de espaciado y SVGs)
  */
 
@@ -224,7 +224,7 @@ async function applyWatermark() {
         let wmWidth, wmHeight;
         
         if (state.watermarkType === 'text') {
-            const text = document.getElementById('watermarkText').value || '© ImaginA';
+            const text = document.getElementById('watermarkText').value || '© PulpiTools';
             const color = document.getElementById('textColor').value;
             
             // Tamaño de fuente dinámico

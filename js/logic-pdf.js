@@ -65,7 +65,7 @@ mergeBtn.addEventListener('click', async function() {
         const url = URL.createObjectURL(blob);
         
         downloadLink.href = url;
-        downloadLink.download = "Imagina_Fusionado.pdf";
+        downloadLink.download = "Pulpi_Fusionado.pdf";
         
         // Mostramos el resultado
         resultDiv.style.display = 'block';

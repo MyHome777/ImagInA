@@ -3,4 +3,4 @@ Allow: /
 Disallow: /sw.js
 Disallow: /favicon/
 
-Sitemap: https://imagina-tools.netlify.app/sitemap.xml
+Sitemap: https://pulpi-tools.netlify.app/sitemap.xml

@@ -127,7 +127,7 @@ convertBtn.addEventListener('click', async function() {
 
         // Mostrar resultado
         downloadLink.href = pdfUrl;
-        downloadLink.download = "Album_ImaginaTools.pdf";
+        downloadLink.download = "Album_PulpiTools.pdf";
         resultBox.style.display = 'block'; // Mostrar caja verde
         btnText.innerText = "¡PDF Creado!";
 
