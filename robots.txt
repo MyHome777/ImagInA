@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /sw.js
+Disallow: /favicon/
+
+Sitemap: https://imagina-tools.netlify.app/sitemap.xml

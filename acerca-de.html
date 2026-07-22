@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acerca de – Pulpi Tools</title>
+<meta name="description" content="Conoce a Pulpi Tools: una suite gratuita de herramientas para PDF e imagen, desarrollada por DC Systems y Cognetix Innovations desde El Salvador.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96"/>
+<link rel="icon" type="image/svg+xml" href="favicon/favicon.svg"/>
+<link rel="shortcut icon" href="favicon/favicon.ico"/>
+<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png"/>
+<link rel="manifest" href="favicon/site.webmanifest"/>
+<style>
+:root{--bg:#f6f5ff;--surface:#ffffff;--surface-2:#f9f8ff;--border:#e8e5f5;--border-2:#d4d0ea;--text:#111111;--text-2:#555555;--text-3:#aaaaaa;--accent:#6d28d9;--accent-l:#7c3aed;--accent-xl:#8b5cf6;--accent-bg:#ede9fe;--accent-bd:#c4b5fd;--nav-h:60px;--r:14px;--shadow:0 1px 3px rgba(0,0,0,.07),0 0 0 1px rgba(0,0,0,.04)}
+[data-theme="dark"]{--bg:#1c1c1e;--surface:#2c2c2e;--surface-2:#3a3a3c;--border:#3a3a3c;--border-2:#48484a;--text:#f2f2f7;--text-2:#aeaeb2;--text-3:#636366;--accent:#a78bfa;--accent-l:#8b5cf6;--accent-xl:#c4b5fd;--accent-bg:rgba(167,139,250,.13);--accent-bd:rgba(167,139,250,.3);--shadow:0 1px 4px rgba(0,0,0,.4),0 0 0 1px rgba(255,255,255,.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding-top:var(--nav-h);-webkit-font-smoothing:antialiased;transition:background .25s,color .25s}
+.bg-blob{position:fixed;border-radius:50%;z-index:-1;pointer-events:none}.blob-1{width:500px;height:500px;top:-160px;right:-140px;background:radial-gradient(circle,rgba(109,40,217,.09) 0%,transparent 70%);filter:blur(55px)}.blob-2{width:420px;height:420px;bottom:-120px;left:-120px;background:radial-gradient(circle,rgba(139,92,246,.07) 0%,transparent 70%);filter:blur(55px)}
+[data-theme="dark"] .blob-1{background:radial-gradient(circle,rgba(109,40,217,.05) 0%,transparent 70%)}
+[data-theme="dark"] .blob-2{background:radial-gradient(circle,rgba(139,92,246,.04) 0%,transparent 70%)}
+.navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:200;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;padding:0 24px;transition:background .25s,border-color .25s}
+.nav-inner{width:100%;max-width:860px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--text);font-size:1.05rem;font-weight:700;letter-spacing:-.02em}
+.brand span{color:var(--accent)}
+.brand-mark{width:30px;height:30px;border-radius:7px;background:var(--accent);display:flex;align-items:center;justify-content:center}
+.brand-mark svg{width:17px;height:17px}
+.nav-right{display:flex;align-items:center;gap:8px}
+.theme-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-2);font-size:.85rem;transition:all .18s}
+.theme-btn:hover{background:var(--accent-bg);color:var(--accent);border-color:var(--accent-bd)}
+.btn-back{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;border:1.5px solid var(--border-2);background:transparent;font-size:.84rem;font-weight:600;color:var(--text-2);text-decoration:none;transition:all .18s}
+.btn-back:hover{border-color:var(--accent-bd);color:var(--accent);background:var(--accent-bg)}
+.page-top{width:100%;max-width:860px;padding:36px 24px 0;animation:fadeUp .4s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.tool-badge{display:inline-flex;align-items:center;gap:7px;padding:4px 12px;border-radius:50px;background:var(--accent-bg);border:1px solid var(--accent-bd);font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.page-top h1{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;letter-spacing:-.025em;line-height:1.15;color:var(--text);margin-bottom:8px}
+.page-top h1 span{color:var(--accent)}
+.page-top>p{font-size:.92rem;color:var(--text-2);line-height:1.65;max-width:540px}
+.content{width:100%;max-width:860px;padding:28px 24px 80px;animation:fadeUp .4s .08s ease both}
+.content-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:36px 32px;box-shadow:var(--shadow);transition:background .25s,border-color .25s}
+.content-card h2{font-size:1.15rem;font-weight:700;color:var(--text);margin:28px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.content-card h2:first-child{margin-top:0}
+.content-card p,.content-card li{font-size:.88rem;color:var(--text-2);line-height:1.8}
+.content-card ul{padding-left:20px;margin:8px 0}
+.content-card li{margin-bottom:6px}
+.content-card a{color:var(--accent);text-decoration:none;font-weight:600}
+.content-card a:hover{text-decoration:underline}
+
+.about-hero{text-align:center;padding:30px 0 20px}
+.about-hero .brand-big{font-size:2rem;font-weight:700;letter-spacing:-.03em;margin-bottom:8px}
+.about-hero .brand-big span{color:var(--accent)}
+.about-hero p{font-size:.9rem;color:var(--text-2);line-height:1.7;max-width:480px;margin:0 auto}
+
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+.value-card{background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:20px 16px;text-align:center}
+.value-card .v-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:1.1rem}
+.value-card h4{font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:6px}
+.value-card p{font-size:.78rem;color:var(--text-2);line-height:1.6}
+
+.team-section{margin-top:24px}
+.team-member{display:flex;align-items:center;gap:16px;padding:16px;background:var(--surface-2);border:1px solid var(--border);border-radius:14px;margin-bottom:12px}
+.team-avatar{width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:700;color:#fff;flex-shrink:0}
+.team-info h4{font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:2px}
+.team-info p{font-size:.78rem;color:var(--text-2);line-height:1.5}
+
+.tech-list{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.tech-tag{padding:6px 14px;border-radius:50px;font-size:.75rem;font-weight:600;background:var(--accent-bg);border:1px solid var(--accent-bd);color:var(--accent)}
+
+.footer-bar{width:100%;background:var(--surface);border-top:1px solid var(--border);padding:20px 24px;transition:background .25s,border-color .25s}
+.footer-inner{max-width:860px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-links{display:flex;gap:16px;flex-wrap:wrap}
+.footer-links a{font-size:.8rem;color:var(--text-2);text-decoration:none;font-weight:500;transition:color .15s}
+.footer-links a:hover{color:var(--accent)}
+.footer-copy{font-size:.74rem;color:var(--text-3)}
+@media(max-width:600px){.page-top,.content{padding-left:16px;padding-right:16px}.content-card{padding:24px 18px}.values-grid{grid-template-columns:1fr}.team-member{flex-direction:column;text-align:center}.footer-inner{flex-direction:column;text-align:center}}
+</style>
+</head>
+<body>
+<div class="bg-blob blob-1"></div>
+<div class="bg-blob blob-2"></div>
+<nav class="navbar"><div class="nav-inner"><a href="index.html" class="brand"><div class="brand-mark"><svg viewBox="0 0 18 18" fill="none"><ellipse cx="9" cy="7.5" rx="5" ry="5.5" fill="#c4b5fd"/><circle cx="6.8" cy="6.5" r="1.8" fill="white"/><circle cx="11.2" cy="6.5" r="1.8" fill="white"/><circle cx="7.2" cy="7" r="1.1" fill="#3b0764"/><circle cx="11.6" cy="7" r="1.1" fill="#3b0764"/><circle cx="7.6" cy="6.4" r=".45" fill="white"/><circle cx="12" cy="6.4" r=".45" fill="white"/><path d="M7.5 9.5 Q9 11 10.5 9.5" stroke="#3b0764" stroke-width=".85" stroke-linecap="round" fill="none"/><path d="M5 12 Q4.2 14.5 4 17" stroke="#c4b5fd" stroke-width="1.6" stroke-linecap="round" fill="none"/><path d="M9 12.5 Q9 15 9 17.5" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M13 12 Q13.8 14.5 14 17" stroke="#c4b5fd" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg></div>Pulpi<span>Tools</span></a><div class="nav-right"><button class="theme-btn" onclick="toggleTheme()" title="Cambiar tema"><i id="themeIcon" class="fa-solid fa-moon"></i></button><a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left" style="font-size:.78rem;"></i> Volver</a></div></div></nav>
+
+<div class="page-top">
+  <div class="tool-badge"><i class="fa-solid fa-users"></i>&nbsp; Equipo</div>
+  <h1>Acerca de <span>Pulpi Tools</span></h1>
+  <p>Conoce al equipo detrás de las herramientas que simplifican tu trabajo con documentos e imágenes.</p>
+</div>
+
+<div class="content">
+  <div class="content-card">
+    <div class="about-hero">
+      <div class="brand-big">Pulpi<span>Tools</span></div>
+      <p>Suite de herramientas gratuitas para documentos PDF e imagen, diseñada para ser rápida, segura y fácil de usar. Todo procesamiento ocurre directamente en tu navegador.</p>
+    </div>
+
+    <h2>Nuestra Misión</h2>
+    <p>Crear herramientas digitales accesibles, gratuitas y respetuosas con la privacidad que qualquer persona pueda usar sin barreras. Creemos que no deberías necesitar crear una cuenta ni subir tus archivos a un servidor solo para comprimir un PDF o cambiar el formato de una imagen.</p>
+
+    <h2>Nuestros Valores</h2>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="v-icon" style="background:#ede9fe;border:1px solid #c4b5fd;color:#6d28d9;"><i class="fa-solid fa-user-shield"></i></div>
+        <h4>Privacidad Primero</h4>
+        <p>Tus archivos nunca salen de tu dispositivo. Todo se procesa localmente en tu navegador.</p>
+      </div>
+      <div class="value-card">
+        <div class="v-icon" style="background:#f0fdf4;border:1px solid #bbf7d0;color:#16a34a;"><i class="fa-solid fa-bolt"></i></div>
+        <h4>Velocidad</h4>
+        <p>Sin servidores, sin colas, sin esperas. Los resultados son instantáneos desde el primer clic.</p>
+      </div>
+      <div class="value-card">
+        <div class="v-icon" style="background:#eff6ff;border:1px solid #93c5fd;color:#2563eb;"><i class="fa-solid fa-lock-open"></i></div>
+        <h4>Acceso Libre</h4>
+        <p>Sin registros obligatorios, sin límites ocultos, sin restricciones. Todo gratuito.</p>
+      </div>
+    </div>
+
+    <h2>El Equipo</h2>
+    <div class="team-section">
+      <div class="team-member">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#6d28d9,#8b5cf6);">DC</div>
+        <div class="team-info">
+          <h4>DC Systems</h4>
+          <p>Desarrollo web y soluciones tecnológicas. Encargado del diseño UI/UX, desarrollo frontend y arquitectura de las herramientas.</p>
+          <a href="https://dc-systems.netlify.app" target="_blank" style="font-size:.8rem;">dc-systems.netlify.app →</a>
+        </div>
+      </div>
+      <div class="team-member">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#059669,#34d399);">CI</div>
+        <div class="team-info">
+          <h4>Cognetix Innovations</h4>
+          <p>Innovación y desarrollo de software. Colaboración en la implementación de algoritmos de procesamiento y optimización.</p>
+          <a href="https://cognetix-innovations.vercel.app/" target="_blank" style="font-size:.8rem;">cognetix-innovations.vercel.app →</a>
+        </div>
+      </div>
+    </div>
+
+    <h2>Tecnologías que Usamos</h2>
+    <p>Construimos Pulpi Tools con tecnologías modernas y open source:</p>
+    <div class="tech-list">
+      <span class="tech-tag">HTML5</span>
+      <span class="tech-tag">CSS3</span>
+      <span class="tech-tag">JavaScript</span>
+      <span class="tech-tag">PDFLib</span>
+      <span class="tech-tag">JSZip</span>
+      <span class="tech-tag">jsPDF</span>
+      <span class="tech-tag">Canvas API</span>
+      <span class="tech-tag">Service Worker</span>
+      <span class="tech-tag">PWA</span>
+      <span class="tech-tag">WebAssembly</span>
+    </div>
+
+    <h2>Origen</h2>
+    <p>Pulpi Tools fue creado en El Salvador 🇸🇻 con el objetivo de ofrecer alternativas gratuitas y seguras a las herramientas de conversión de documentos que generalmente requieren suscripciones o comprometen la privacidad del usuario.</p>
+
+    <h2>Contacto</h2>
+    <p>¿Tienes sugerencias, preguntas o colaboraciones? Visita nuestros sitios web:</p>
+    <ul>
+      <li><strong>DC Systems:</strong> <a href="https://dc-systems.netlify.app" target="_blank">dc-systems.netlify.app</a></li>
+      <li><strong>Cognetix Innovations:</strong> <a href="https://cognetix-innovations.vercel.app/" target="_blank">cognetix-innovations.vercel.app</a></li>
+    </ul>
+  </div>
+</div>
+
+<footer class="footer-bar"><div class="footer-inner"><div class="footer-links"><a href="privacidad.html">Política de Privacidad</a><a href="terminos.html">Términos de Servicio</a><a href="acerca-de.html">Acerca de</a></div><div class="footer-copy">&copy; 2026 PulpiTools</div></div></footer>
+
+<script>
+(function(){const s=localStorage.getItem('pulpi_theme'),d=window.matchMedia('(prefers-color-scheme:dark)').matches;applyTheme(s||(d?'dark':'light'));})();
+function applyTheme(t){document.documentElement.setAttribute('data-theme',t);localStorage.setItem('pulpi_theme',t);const ic=document.getElementById('themeIcon');if(ic)ic.className=t==='dark'?'fa-solid fa-sun':'fa-solid fa-moon';}
+function toggleTheme(){applyTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');}
+</script>
+</body>
+</html>

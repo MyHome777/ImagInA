@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Términos de Servicio – Pulpi Tools</title>
+<meta name="description" content="Términos y condiciones de uso de Pulpi Tools. Lee las reglas y condiciones para utilizar nuestras herramientas gratuitas de PDF e imagen.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96"/>
+<link rel="icon" type="image/svg+xml" href="favicon/favicon.svg"/>
+<link rel="shortcut icon" href="favicon/favicon.ico"/>
+<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png"/>
+<link rel="manifest" href="favicon/site.webmanifest"/>
+<style>
+:root{--bg:#f6f5ff;--surface:#ffffff;--surface-2:#f9f8ff;--border:#e8e5f5;--border-2:#d4d0ea;--text:#111111;--text-2:#555555;--text-3:#aaaaaa;--accent:#6d28d9;--accent-l:#7c3aed;--accent-xl:#8b5cf6;--accent-bg:#ede9fe;--accent-bd:#c4b5fd;--nav-h:60px;--r:14px;--shadow:0 1px 3px rgba(0,0,0,.07),0 0 0 1px rgba(0,0,0,.04)}
+[data-theme="dark"]{--bg:#1c1c1e;--surface:#2c2c2e;--surface-2:#3a3a3c;--border:#3a3a3c;--border-2:#48484a;--text:#f2f2f7;--text-2:#aeaeb2;--text-3:#636366;--accent:#a78bfa;--accent-l:#8b5cf6;--accent-xl:#c4b5fd;--accent-bg:rgba(167,139,250,.13);--accent-bd:rgba(167,139,250,.3);--shadow:0 1px 4px rgba(0,0,0,.4),0 0 0 1px rgba(255,255,255,.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding-top:var(--nav-h);-webkit-font-smoothing:antialiased;transition:background .25s,color .25s}
+.bg-blob{position:fixed;border-radius:50%;z-index:-1;pointer-events:none}.blob-1{width:500px;height:500px;top:-160px;right:-140px;background:radial-gradient(circle,rgba(109,40,217,.09) 0%,transparent 70%);filter:blur(55px)}.blob-2{width:420px;height:420px;bottom:-120px;left:-120px;background:radial-gradient(circle,rgba(139,92,246,.07) 0%,transparent 70%);filter:blur(55px)}
+[data-theme="dark"] .blob-1{background:radial-gradient(circle,rgba(109,40,217,.05) 0%,transparent 70%)}
+[data-theme="dark"] .blob-2{background:radial-gradient(circle,rgba(139,92,246,.04) 0%,transparent 70%)}
+.navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:200;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;padding:0 24px;transition:background .25s,border-color .25s}
+.nav-inner{width:100%;max-width:860px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--text);font-size:1.05rem;font-weight:700;letter-spacing:-.02em}
+.brand span{color:var(--accent)}
+.brand-mark{width:30px;height:30px;border-radius:7px;background:var(--accent);display:flex;align-items:center;justify-content:center}
+.brand-mark svg{width:17px;height:17px}
+.nav-right{display:flex;align-items:center;gap:8px}
+.theme-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-2);font-size:.85rem;transition:all .18s}
+.theme-btn:hover{background:var(--accent-bg);color:var(--accent);border-color:var(--accent-bd)}
+.btn-back{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;border:1.5px solid var(--border-2);background:transparent;font-size:.84rem;font-weight:600;color:var(--text-2);text-decoration:none;transition:all .18s}
+.btn-back:hover{border-color:var(--accent-bd);color:var(--accent);background:var(--accent-bg)}
+.page-top{width:100%;max-width:860px;padding:36px 24px 0;animation:fadeUp .4s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.tool-badge{display:inline-flex;align-items:center;gap:7px;padding:4px 12px;border-radius:50px;background:var(--accent-bg);border:1px solid var(--accent-bd);font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.page-top h1{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;letter-spacing:-.025em;line-height:1.15;color:var(--text);margin-bottom:8px}
+.page-top h1 span{color:var(--accent)}
+.page-top>p{font-size:.92rem;color:var(--text-2);line-height:1.65;max-width:540px}
+.content{width:100%;max-width:860px;padding:28px 24px 80px;animation:fadeUp .4s .08s ease both}
+.content-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:36px 32px;box-shadow:var(--shadow);transition:background .25s,border-color .25s}
+.content-card h2{font-size:1.15rem;font-weight:700;color:var(--text);margin:28px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.content-card h2:first-child{margin-top:0}
+.content-card h3{font-size:.95rem;font-weight:700;color:var(--text);margin:20px 0 8px}
+.content-card p,.content-card li{font-size:.88rem;color:var(--text-2);line-height:1.8}
+.content-card ul{padding-left:20px;margin:8px 0}
+.content-card li{margin-bottom:6px}
+.content-card a{color:var(--accent);text-decoration:none;font-weight:600}
+.content-card a:hover{text-decoration:underline}
+.content-card .update-date{font-size:.8rem;color:var(--text-3);font-style:italic;margin-bottom:20px}
+.footer-bar{width:100%;background:var(--surface);border-top:1px solid var(--border);padding:20px 24px;transition:background .25s,border-color .25s}
+.footer-inner{max-width:860px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-links{display:flex;gap:16px;flex-wrap:wrap}
+.footer-links a{font-size:.8rem;color:var(--text-2);text-decoration:none;font-weight:500;transition:color .15s}
+.footer-links a:hover{color:var(--accent)}
+.footer-copy{font-size:.74rem;color:var(--text-3)}
+@media(max-width:600px){.page-top,.content{padding-left:16px;padding-right:16px}.content-card{padding:24px 18px}.footer-inner{flex-direction:column;text-align:center}}
+</style>
+</head>
+<body>
+<div class="bg-blob blob-1"></div>
+<div class="bg-blob blob-2"></div>
+<nav class="navbar"><div class="nav-inner"><a href="index.html" class="brand"><div class="brand-mark"><svg viewBox="0 0 18 18" fill="none"><ellipse cx="9" cy="7.5" rx="5" ry="5.5" fill="#c4b5fd"/><circle cx="6.8" cy="6.5" r="1.8" fill="white"/><circle cx="11.2" cy="6.5" r="1.8" fill="white"/><circle cx="7.2" cy="7" r="1.1" fill="#3b0764"/><circle cx="11.6" cy="7" r="1.1" fill="#3b0764"/><circle cx="7.6" cy="6.4" r=".45" fill="white"/><circle cx="12" cy="6.4" r=".45" fill="white"/><path d="M7.5 9.5 Q9 11 10.5 9.5" stroke="#3b0764" stroke-width=".85" stroke-linecap="round" fill="none"/><path d="M5 12 Q4.2 14.5 4 17" stroke="#c4b5fd" stroke-width="1.6" stroke-linecap="round" fill="none"/><path d="M9 12.5 Q9 15 9 17.5" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M13 12 Q13.8 14.5 14 17" stroke="#c4b5fd" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg></div>Pulpi<span>Tools</span></a><div class="nav-right"><button class="theme-btn" onclick="toggleTheme()" title="Cambiar tema"><i id="themeIcon" class="fa-solid fa-moon"></i></button><a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left" style="font-size:.78rem;"></i> Volver</a></div></div></nav>
+
+<div class="page-top">
+  <div class="tool-badge"><i class="fa-solid fa-file-contract"></i>&nbsp; Legal</div>
+  <h1>Términos de <span>Servicio</span></h1>
+  <p>Lee atentamente las condiciones que regulan el uso de Pulpi Tools.</p>
+</div>
+
+<div class="content">
+  <div class="content-card">
+    <p class="update-date">Última actualización: 21 de julio de 2026</p>
+
+    <h2>1. Aceptación de los términos</h2>
+    <p>Al acceder y utilizar Pulpi Tools ("el Sitio"), ubicado en <a href="https://pulpi-tools.netlify.app">pulpi-tools.netlify.app</a>, aceptas cumplir con estos Términos de Servicio. Si no estás de acuerdo con alguno de estos términos, por favor no utilices el sitio.</p>
+
+    <h2>2. Descripción del servicio</h2>
+    <p>Pulpi Tools es una suite gratuita de herramientas en línea para el procesamiento de documentos PDF e imágenes. Las herramientas incluyen:</p>
+    <ul>
+      <li>Fusionar, comprimir, rotar, extraer páginas, numerar y proteger PDFs</li>
+      <li>Convertir PDF a Word e imágenes a PDF</li>
+      <li>Editor de imágenes con cambio de formato y redimensionamiento</li>
+      <li>Compresor de fotos con múltiples presets de calidad</li>
+      <li>Removedor de fondo con inteligencia artificial</li>
+      <li>Generador de códigos QR</li>
+      <li>Agregador de marcas de agua a PDFs e imágenes</li>
+      <li>Herramienta para firmar PDFs</li>
+    </ul>
+    <p><strong>Todas las herramientas procesan los archivos localmente en tu navegador.</strong> Los archivos nunca se suben a ningún servidor.</p>
+
+    <h2>3. Uso aceptable</h2>
+    <p>Al utilizar Pulpi Tools, te comprometes a:</p>
+    <ul>
+      <li>Utilizar las herramientas de manera legal y ética</li>
+      <li>No utilizar el sitio para actividades fraudulentas, ilegales o que violen derechos de terceros</li>
+      <li>No intentar vulnerar la seguridad del sitio o sus sistemas</li>
+      <li>No realizar automatizaciones masivas o scraping que sobrecarguen los servidores</li>
+      <li>No reproducir, duplicar o copiar el contenido del sitio sin autorización</li>
+      <li>Ser responsable del contenido de los archivos que procesas</li>
+    </ul>
+
+    <h2>4. Propiedad intelectual</h2>
+    <p>El diseño, código fuente, logotipos, iconos y contenido textual de Pulpi Tools son propiedad de DC Systems y Cognetix Innovations, protegidos por las leyes de propiedad intelectual. No está permitido copiar, modificar o distribuir nuestro contenido sin autorización previa por escrito.</p>
+    <p>Las bibliotecas de terceros utilizadas (PDFLib, JSZip, jsPDF, etc.) están sujetas a sus propias licencias open source.</p>
+
+    <h2>5. Contenido del usuario</h2>
+    <p>Dado que todo el procesamiento ocurre en tu dispositivo local:</p>
+    <ul>
+      <li>Mantienes la propiedad total e integridad de tus archivos en todo momento</li>
+      <li>No tenemos acceso al contenido de ningún archivo que proceses</li>
+      <li>No almacenamos, copiamos ni compartimos tus archivos</li>
+      <li>Eres el único responsable del uso que le das a las herramientas y del contenido que procesas</li>
+    </ul>
+
+    <h2>6. Disponibilidad del servicio</h2>
+    <p>Nos esforzamos por mantener Pulpi Tools disponible y funcionando correctamente. Sin embargo:</p>
+    <ul>
+      <li>El servicio se proporciona "tal cual" y "según disponibilidad"</li>
+      <li>No garantizamos disponibilidad ininterrumpida del 100%</li>
+      <li>Podemos realizar mantenimiento o actualizaciones sin previo aviso</li>
+      <li>No nos hacemos responsables por interrupciones o fallos del servicio</li>
+    </ul>
+
+    <h2>7. Limitación de responsabilidad</h2>
+    <p>En la máxima medida permitida por la ley aplicable:</p>
+    <ul>
+      <li>Pulpi Tools no será responsable de ningún daño directo, indirecto, incidental o consecuente derivado del uso del sitio</li>
+      <li>No garantizamos que las herramientas estén libres de errores o interrupciones</li>
+      <li>Eres responsable de crear copias de seguridad de tus archivos antes de procesarlos</li>
+      <li>Nuestra responsabilidad máxima será limitada al monto que, si alguno, hayas pagado por el servicio (que actualmente es cero, ya que el servicio es gratuito)</li>
+    </ul>
+
+    <h2>8. Anuncios</h2>
+    <p>Pulpi Tools muestra anuncios a través de Google AdSense para mantener el servicio gratuito. Al utilizar el sitio, aceptas la visualización de estos anuncios. Los anuncios no comprometen tu privacidad ni tienen acceso al contenido de tus archivos.</p>
+
+    <h2>9. Enlaces a terceros</h2>
+    <p>El sitio puede contener enlaces a sitios web de terceros. No tenemos control sobre el contenido ni las prácticas de privacidad de estos sitios. Recomendamos revisar las políticas de cualquier sitio de terceros que visites.</p>
+
+    <h2>10. Menores de edad</h2>
+    <p>Pulpi Tools no requiere registro ni recopila datos personales, por lo que puede ser utilizado por personas de cualquier edad. Sin embargo, recomendamos que los menores de 13 años cuenten con supervisión de un adulto.</p>
+
+    <h2>11. Cambios en los términos</h2>
+    <p>Nos reservamos el derecho de modificar estos Términos de Servicio en cualquier momento. Los cambios se publicarán en esta página con la fecha de actualización revisada. El uso continuado del sitio después de los cambios constituye la aceptación de los nuevos términos.</p>
+
+    <h2>12. Legislación aplicable</h2>
+    <p>Estos términos se rigen por las leyes de la República de El Salvador. Cualquier disputa será sometida a la jurisdicción de los tribunales competentes de El Salvador.</p>
+
+    <h2>13. Contacto</h2>
+    <p>Si tienes preguntas sobre estos Términos de Servicio, contáctanos:</p>
+    <ul>
+      <li><strong>Sitio web:</strong> <a href="https://dc-systems.netlify.app">dc-systems.netlify.app</a></li>
+      <li><strong>Sitio web:</strong> <a href="https://cognetix-innovations.vercel.app/">cognetix-innovations.vercel.app</a></li>
+      <li><strong>Desarrolladores:</strong> DC Systems & Cognetix Innovations</li>
+    </ul>
+  </div>
+</div>
+
+<footer class="footer-bar"><div class="footer-inner"><div class="footer-links"><a href="privacidad.html">Política de Privacidad</a><a href="terminos.html">Términos de Servicio</a><a href="acerca-de.html">Acerca de</a></div><div class="footer-copy">&copy; 2026 PulpiTools</div></div></footer>
+
+<script>
+(function(){const s=localStorage.getItem('pulpi_theme'),d=window.matchMedia('(prefers-color-scheme:dark)').matches;applyTheme(s||(d?'dark':'light'));})();
+function applyTheme(t){document.documentElement.setAttribute('data-theme',t);localStorage.setItem('pulpi_theme',t);const ic=document.getElementById('themeIcon');if(ic)ic.className=t==='dark'?'fa-solid fa-sun':'fa-solid fa-moon';}
+function toggleTheme(){applyTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');}
+</script>
+</body>
+</html>
