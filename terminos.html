@@ -8,11 +8,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96"/>
-<link rel="icon" type="image/svg+xml" href="favicon/favicon.svg"/>
-<link rel="shortcut icon" href="favicon/favicon.ico"/>
-<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png"/>
-<link rel="manifest" href="favicon/site.webmanifest"/>
+  <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="PulpiTools" />
+  <link rel="manifest" href="/favicon/site.webmanifest" />
 <style>
 :root{--bg:#f6f5ff;--surface:#ffffff;--surface-2:#f9f8ff;--border:#e8e5f5;--border-2:#d4d0ea;--text:#111111;--text-2:#555555;--text-3:#aaaaaa;--accent:#6d28d9;--accent-l:#7c3aed;--accent-xl:#8b5cf6;--accent-bg:#ede9fe;--accent-bd:#c4b5fd;--nav-h:60px;--r:14px;--shadow:0 1px 3px rgba(0,0,0,.07),0 0 0 1px rgba(0,0,0,.04)}
 [data-theme="dark"]{--bg:#1c1c1e;--surface:#2c2c2e;--surface-2:#3a3a3c;--border:#3a3a3c;--border-2:#48484a;--text:#f2f2f7;--text-2:#aeaeb2;--text-3:#636366;--accent:#a78bfa;--accent-l:#8b5cf6;--accent-xl:#c4b5fd;--accent-bg:rgba(167,139,250,.13);--accent-bd:rgba(167,139,250,.3);--shadow:0 1px 4px rgba(0,0,0,.4),0 0 0 1px rgba(255,255,255,.04)}
@@ -25,8 +26,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .nav-inner{width:100%;max-width:860px;display:flex;align-items:center;justify-content:space-between}
 .brand{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--text);font-size:1.05rem;font-weight:700;letter-spacing:-.02em}
 .brand span{color:var(--accent)}
-.brand-mark{width:30px;height:30px;border-radius:7px;background:var(--accent);display:flex;align-items:center;justify-content:center}
-.brand-mark svg{width:17px;height:17px}
+.brand-mark{width:30px;height:30px;border-radius:7px;background:transparent;border:none;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:0 0 30px}
+.brand-mark img{width:100%;height:100%;object-fit:contain;display:block}
 .nav-right{display:flex;align-items:center;gap:8px}
 .theme-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-2);font-size:.85rem;transition:all .18s}
 .theme-btn:hover{background:var(--accent-bg);color:var(--accent);border-color:var(--accent-bd)}
@@ -61,7 +62,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 <body>
 <div class="bg-blob blob-1"></div>
 <div class="bg-blob blob-2"></div>
-<nav class="navbar"><div class="nav-inner"><a href="index.html" class="brand"><div class="brand-mark"><svg viewBox="0 0 18 18" fill="none"><ellipse cx="9" cy="7.5" rx="5" ry="5.5" fill="#c4b5fd"/><circle cx="6.8" cy="6.5" r="1.8" fill="white"/><circle cx="11.2" cy="6.5" r="1.8" fill="white"/><circle cx="7.2" cy="7" r="1.1" fill="#3b0764"/><circle cx="11.6" cy="7" r="1.1" fill="#3b0764"/><circle cx="7.6" cy="6.4" r=".45" fill="white"/><circle cx="12" cy="6.4" r=".45" fill="white"/><path d="M7.5 9.5 Q9 11 10.5 9.5" stroke="#3b0764" stroke-width=".85" stroke-linecap="round" fill="none"/><path d="M5 12 Q4.2 14.5 4 17" stroke="#c4b5fd" stroke-width="1.6" stroke-linecap="round" fill="none"/><path d="M9 12.5 Q9 15 9 17.5" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M13 12 Q13.8 14.5 14 17" stroke="#c4b5fd" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg></div>Pulpi<span>Tools</span></a><div class="nav-right"><button class="theme-btn" onclick="toggleTheme()" title="Cambiar tema"><i id="themeIcon" class="fa-solid fa-moon"></i></button><a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left" style="font-size:.78rem;"></i> Volver</a></div></div></nav>
+<nav class="navbar"><div class="nav-inner"><a href="index.html" class="brand"><div class="brand-mark"><img src="img/logo-icono-pulpitools.webp" alt="Pulpi Tools"></div>Pulpi<span>Tools</span></a><div class="nav-right"><button class="theme-btn" onclick="toggleTheme()" title="Cambiar tema"><i id="themeIcon" class="fa-solid fa-moon"></i></button><a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left" style="font-size:.78rem;"></i> Volver</a></div></div></nav>
 
 <div class="page-top">
   <div class="tool-badge"><i class="fa-solid fa-file-contract"></i>&nbsp; Legal</div>
@@ -166,3 +167,5 @@ function toggleTheme(){applyTheme(document.documentElement.getAttribute('data-th
 </script>
 </body>
 </html>
+
+

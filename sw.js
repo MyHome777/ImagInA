@@ -4,17 +4,18 @@
    como: sw.js
 ═══════════════════════════════════════════ */
 
-const CACHE_NAME = 'pulpitools-v1';
+const CACHE_NAME = 'pulpitools-v2';
 
 // Archivos que se cachean al instalar (shell de la app)
 const PRECACHE = [
   '/',
   '/index.html',
+  '/favicon/favicon.svg',
   '/favicon/favicon.ico',
   '/favicon/favicon-96x96.png',
   '/favicon/apple-touch-icon.png',
-  '/favicon/android-chrome-192x192.png',
-  '/favicon/android-chrome-512x512.png',
+  '/favicon/web-app-manifest-192x192.png',
+  '/favicon/web-app-manifest-512x512.png',
   '/favicon/site.webmanifest'
 ];
 
