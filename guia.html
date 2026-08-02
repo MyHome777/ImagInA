@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guías y Recursos - Pulpi Tools</title>
+  <meta name="description" content="Guías prácticas para usar Pulpi Tools: comprimir archivos, unir PDFs, extraer páginas, proteger documentos y trabajar sin subir tus archivos a servidores.">
+  <link rel="canonical" href="https://pulpi-tools.netlify.app/guia.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pulpi Tools">
+  <meta property="og:title" content="Guías y Recursos - Pulpi Tools">
+  <meta property="og:description" content="Aprende a usar las herramientas de Pulpi Tools con consejos prácticos, preguntas frecuentes y buenas prácticas.">
+  <meta property="og:url" content="https://pulpi-tools.netlify.app/guia.html">
+  <meta property="og:image" content="https://pulpi-tools.netlify.app/img/logo-icono-pulpitools.webp">
+  <meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="PulpiTools" />
+  <link rel="manifest" href="/favicon/site.webmanifest" />
+<style>
+:root{--bg:#f6f5ff;--surface:#ffffff;--surface-2:#f9f8ff;--border:#e8e5f5;--border-2:#d4d0ea;--text:#111111;--text-2:#555555;--text-3:#aaaaaa;--accent:#6d28d9;--accent-l:#7c3aed;--accent-xl:#8b5cf6;--accent-bg:#ede9fe;--accent-bd:#c4b5fd;--nav-h:60px;--r:18px;--shadow:0 1px 3px rgba(0,0,0,.07),0 0 0 1px rgba(0,0,0,.04);--shadow-h:0 20px 48px rgba(0,0,0,.14),0 8px 16px rgba(0,0,0,.07)}
+[data-theme="dark"]{--bg:#1c1c1e;--surface:#2c2c2e;--surface-2:#3a3a3c;--border:#3a3a3c;--border-2:#48484a;--text:#f2f2f7;--text-2:#aeaeb2;--text-3:#636366;--accent:#a78bfa;--accent-l:#8b5cf6;--accent-xl:#c4b5fd;--accent-bg:rgba(167,139,250,.13);--accent-bd:rgba(167,139,250,.3);--shadow:0 1px 4px rgba(0,0,0,.4),0 0 0 1px rgba(255,255,255,.04);--shadow-h:0 20px 48px rgba(0,0,0,.6),0 8px 16px rgba(0,0,0,.35)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding-top:var(--nav-h);-webkit-font-smoothing:antialiased;transition:background .25s,color .25s}
+.bg-blob{position:fixed;border-radius:50%;z-index:-1;pointer-events:none}.blob-1{width:520px;height:520px;top:-180px;right:-160px;background:radial-gradient(circle,rgba(109,40,217,.09) 0%,transparent 70%);filter:blur(58px)}.blob-2{width:420px;height:420px;bottom:-120px;left:-120px;background:radial-gradient(circle,rgba(139,92,246,.07) 0%,transparent 70%);filter:blur(58px)}
+[data-theme="dark"] .blob-1{background:radial-gradient(circle,rgba(109,40,217,.05) 0%,transparent 70%)}
+[data-theme="dark"] .blob-2{background:radial-gradient(circle,rgba(139,92,246,.04) 0%,transparent 70%)}
+.navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:200;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;padding:0 24px;transition:background .25s,border-color .25s}
+.nav-inner{width:100%;max-width:980px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--text);font-size:1.05rem;font-weight:700;letter-spacing:-.02em}
+.brand span{color:var(--accent)}
+.brand-mark{width:30px;height:30px;border-radius:7px;background:transparent;border:none;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:0 0 30px}
+.brand-mark img{width:100%;height:100%;object-fit:contain;display:block}
+.nav-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.theme-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-2);font-size:.85rem;transition:all .18s}
+.theme-btn:hover{background:var(--accent-bg);color:var(--accent);border-color:var(--accent-bd)}
+.btn-back{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;border:1.5px solid var(--border-2);background:transparent;font-size:.84rem;font-weight:600;color:var(--text-2);text-decoration:none;transition:all .18s}
+.btn-back:hover{border-color:var(--accent-bd);color:var(--accent);background:var(--accent-bg)}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:12px;border:1px solid var(--accent-bd);background:var(#a78bfa00);color:#fff;text-decoration:none;font-size:.88rem;font-weight:700;box-shadow:0 8px 20px rgba(109,40,217,.18);transition:transform .16s,box-shadow .16s,background .16s}
+.btn-primary:hover{transform:translateY(-1px);background:var(--accent-l);box-shadow:0 14px 28px rgba(109,40,217,.22)}
+.btn-secondary{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:12px;border:1px solid var(--border-2);background:var(--surface);color:var(--text);text-decoration:none;font-size:.88rem;font-weight:700;transition:transform .16s,border-color .16s,background .16s}
+.btn-secondary:hover{transform:translateY(-1px);border-color:var(--accent-bd);background:var(--accent-bg)}
+.page-top{width:100%;max-width:980px;padding:36px 24px 0;animation:fadeUp .4s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.tool-badge{display:inline-flex;align-items:center;gap:7px;padding:4px 12px;border-radius:50px;background:var(--accent-bg);border:1px solid var(--accent-bd);font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.page-top h1{font-size:clamp(1.7rem,3vw,2.45rem);font-weight:700;letter-spacing:-.03em;line-height:1.1;color:var(--text);margin-bottom:10px}
+.page-top h1 span{color:var(--accent)}
+.page-top>p{font-size:.94rem;color:var(--text-2);line-height:1.72;max-width:660px}
+.content{width:100%;max-width:980px;padding:28px 24px 80px;animation:fadeUp .4s .08s ease both}
+.content-card{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:34px 30px;box-shadow:var(--shadow);transition:background .25s,border-color .25s}
+.content-card h2{font-size:1.12rem;font-weight:700;color:var(--text);margin:30px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.content-card h2:first-child{margin-top:0}
+.content-card p,.content-card li{font-size:.9rem;color:var(--text-2);line-height:1.82}
+.content-card ul,.content-card ol{padding-left:20px;margin:10px 0}
+.content-card li{margin-bottom:8px}
+.content-card a{color:var(--accent);text-decoration:none;font-weight:600}
+.content-card a:hover{text-decoration:underline}
+.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:14px 0 10px}
+.summary-card,.tip-card,.faq-card,.process-card{background:var(--surface-2);border:1px solid var(--border);border-radius:16px;padding:18px}
+.summary-card .mini,.faq-card .mini{display:inline-flex;align-items:center;gap:6px;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.summary-card h3,.tip-card h3,.faq-card h3{font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:6px}
+.summary-card p,.tip-card p,.faq-card p,.process-card p{font-size:.8rem;color:var(--text-2);line-height:1.7}
+.guide-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:18px 0}
+.guide-card{background:linear-gradient(180deg,var(--surface-2),transparent);border:1px solid var(--border);border-radius:18px;padding:20px}
+.guide-card strong{display:block;font-size:.92rem;color:var(--text);margin-bottom:8px}
+.guide-card p{font-size:.82rem;color:var(--text-2);line-height:1.75}
+.process-grid,.faq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}
+.process-card ol{padding-left:18px;margin:10px 0 0}
+.process-card li{font-size:.82rem;color:var(--text-2);line-height:1.7;margin-bottom:8px}
+.cta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.note{margin-top:14px;padding:14px 16px;border-left:4px solid var(--accent);background:var(--accent-bg);border-radius:12px;font-size:.84rem;color:var(--text-2);line-height:1.75}
+.footer-bar{width:100%;background:var(--surface);border-top:1px solid var(--border);padding:20px 24px;transition:background .25s,border-color .25s}
+.footer-inner{max-width:980px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-links{display:flex;gap:16px;flex-wrap:wrap}
+.footer-links a{font-size:.8rem;color:var(--text-2);text-decoration:none;font-weight:500;transition:color .15s}
+.footer-links a:hover{color:var(--accent)}
+.footer-copy{font-size:.74rem;color:var(--text-3)}
+@media(max-width:760px){.summary-grid,.guide-grid,.process-grid,.faq-grid{grid-template-columns:1fr}.nav-inner{gap:10px}.nav-right{gap:6px}.btn-back{padding:7px 12px}}
+@media(max-width:600px){.page-top,.content{padding-left:16px;padding-right:16px}.content-card{padding:24px 18px}.footer-inner{flex-direction:column;text-align:center}}
+</style>
+</head>
+<body>
+<div class="bg-blob blob-1"></div>
+<div class="bg-blob blob-2"></div>
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <div class="brand-mark"><img src="img/logo-icono-pulpitools.webp" alt="Pulpi Tools"></div>Pulpi<span>Tools</span>
+    </a>
+    <div class="nav-right">
+      <button class="theme-btn" onclick="toggleTheme()" title="Cambiar tema"><i id="themeIcon" class="fa-solid fa-moon"></i></button>
+      <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left" style="font-size:.78rem;"></i> Inicio</a>
+      <a href="acerca-de.html" class="btn-back">Acerca de</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-top">
+  <div class="tool-badge"><i class="fa-solid fa-book-open"></i>&nbsp; Recursos</div>
+  <h1>Guías y <span>recursos</span></h1>
+  <p>Contenido práctico para usar mejor Pulpi Tools. Estas guías explican cuándo conviene cada herramienta, cómo proteger tus archivos y qué buenas prácticas seguir para obtener mejores resultados.</p>
+</div>
+
+<div class="content">
+  <div class="content-card">
+    <p class="update-date">Última actualización: 2 de agosto de 2026</p>
+
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="mini"><i class="fa-solid fa-shield-halved"></i> Privacidad</div>
+        <h3>Procesamiento local</h3>
+        <p>Las herramientas están pensadas para que trabajes sin subir archivos a servidores externos. Eso reduce riesgos y simplifica el uso diario.</p>
+      </div>
+      <div class="summary-card">
+        <div class="mini"><i class="fa-solid fa-bolt"></i> Rapidez</div>
+        <h3>Resultados inmediatos</h3>
+        <p>Si necesitas una acción puntual, puedes ir directo al resultado: comprimir, fusionar, convertir o proteger en pocos pasos.</p>
+      </div>
+      <div class="summary-card">
+        <div class="mini"><i class="fa-solid fa-mobile-screen"></i> Acceso</div>
+        <h3>Funciona en navegador</h3>
+        <p>No necesitas instalar programas pesados para tareas simples. El sitio está orientado a escritorio y móvil con la misma idea: menos fricción.</p>
+      </div>
+    </div>
+
+    <h2>Cómo elegir la herramienta correcta</h2>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <strong>Si quieres reducir tamaño</strong>
+        <p>Usa <a href="compresor.html">Comprimir Fotos</a> para imágenes y <a href="comprimir.html">Comprimir PDF</a> para documentos. La idea es distinta: una optimiza fotos y la otra reempaqueta páginas PDF.</p>
+      </div>
+      <div class="guide-card">
+        <strong>Si necesitas reorganizar documentos</strong>
+        <p><a href="pdf.html">Fusionar PDFs</a> sirve para unir varios archivos, mientras que <a href="extraer.html">Extraer Páginas</a> es la opción correcta cuando solo necesitas una parte concreta del documento.</p>
+      </div>
+      <div class="guide-card">
+        <strong>Si trabajas con imágenes para web</strong>
+        <p><a href="imagenes.html">Editor de Imágenes</a> es útil para cambiar formato y tamaño. Si lo que buscas es quitar fondos, la opción adecuada es <a href="remover-fondo.html">Remover Fondo</a>.</p>
+      </div>
+      <div class="guide-card">
+        <strong>Si vas a compartir o proteger</strong>
+        <p><a href="proteger-pdf.html">Proteger PDF</a>, <a href="marca-de-agua.html">Marca de Agua</a> y <a href="firma.html">Firmar PDF</a> se enfocan en distribución, control y presentación de documentos antes de enviarlos.</p>
+      </div>
+    </div>
+
+    <h2>Flujo recomendado para la mayoría de tareas</h2>
+    <div class="process-grid">
+      <div class="process-card">
+        <h3>1. Prepara el archivo original</h3>
+        <p>Guarda una copia sin modificar. Si algo sale mal, volver al archivo base evita perder trabajo y te permite probar otra configuración.</p>
+        <ol>
+          <li>Revisa el formato de entrada.</li>
+          <li>Confirma que el archivo se abra correctamente.</li>
+          <li>Haz una copia de respaldo si vas a comprimir o editar de forma intensa.</li>
+        </ol>
+      </div>
+      <div class="process-card">
+        <h3>2. Elige solo la función que necesitas</h3>
+        <p>Evita encadenar varias acciones si una sola basta. Un flujo más corto suele dar mejores resultados y menos pérdida de calidad.</p>
+        <ol>
+          <li>Convierte antes de comprimir cuando sea necesario.</li>
+          <li>Fusiona o extrae páginas antes de añadir marca de agua o firma.</li>
+          <li>Usa el formato final que mejor se adapte al destino.</li>
+        </ol>
+      </div>
+      <div class="process-card">
+        <h3>3. Revisa el resultado final</h3>
+        <p>Comprueba legibilidad, orientación y peso antes de compartir el archivo. Una revisión rápida evita reenviar documentos incorrectos.</p>
+        <ol>
+          <li>Abre el archivo generado.</li>
+          <li>Verifica que el texto y las imágenes se vean bien.</li>
+          <li>Confirma que el tamaño final sea el que buscabas.</li>
+        </ol>
+      </div>
+      <div class="process-card">
+        <h3>4. Selecciona el formato correcto</h3>
+        <p>La calidad y el tamaño dependen mucho del formato. JPG suele rendir mejor en fotos, PNG en gráficos con transparencia y WebP cuando buscas un balance entre calidad y peso.</p>
+        <ol>
+          <li>Fotos: JPG o WebP.</li>
+          <li>Logos y gráficos: PNG o WebP.</li>
+          <li>Documentos: PDF.</li>
+        </ol>
+      </div>
+    </div>
+
+    <h2>Preguntas frecuentes</h2>
+    <div class="faq-grid">
+      <div class="faq-card">
+        <div class="mini"><i class="fa-solid fa-lock"></i> Privacidad</div>
+        <h3>¿Mis archivos se suben a un servidor?</h3>
+        <p>Las herramientas están diseñadas para trabajar localmente en el navegador. Eso ayuda a mantener el control del archivo en tu dispositivo y reduce el intercambio innecesario de datos.</p>
+      </div>
+      <div class="faq-card">
+        <div class="mini"><i class="fa-solid fa-file-arrow-down"></i> Formatos</div>
+        <h3>¿Qué formato conviene usar?</h3>
+        <p>Depende del objetivo: PDF para documentos, JPG para fotos, PNG para gráficos y transparencia, y WebP cuando quieres buena compresión con calidad visual.</p>
+      </div>
+      <div class="faq-card">
+        <div class="mini"><i class="fa-solid fa-mobile-screen-button"></i> Dispositivos</div>
+        <h3>¿Funciona en celular?</h3>
+        <p>Sí, aunque algunas tareas pesadas se sienten mejor en escritorio. El sitio está pensado para ser usable en pantallas pequeñas sin romper la navegación principal.</p>
+      </div>
+      <div class="faq-card">
+        <div class="mini"><i class="fa-solid fa-circle-info"></i> Anuncios</div>
+        <h3>¿Por qué el sitio muestra anuncios?</h3>
+        <p>Los anuncios ayudan a sostener el proyecto sin cobrar acceso ni obligar a crear una cuenta. La idea es mantener herramientas gratuitas para tareas rápidas.</p>
+      </div>
+      <div class="faq-card">
+        <div class="mini"><i class="fa-solid fa-clipboard-check"></i> Calidad</div>
+        <h3>¿Qué hace que un resultado sea mejor?</h3>
+        <p>Trabajar desde un archivo base limpio, escoger el formato correcto y revisar el resultado antes de compartirlo evita pérdida de calidad y correcciones posteriores.</p>
+      </div>
+      <div class="faq-card">
+        <div class="mini"><i class="fa-solid fa-book"></i> Recurso</div>
+        <h3>¿Dónde empiezo si nunca he usado la web?</h3>
+        <p>Ve a la portada y elige una sola tarea. Si dudas entre dos opciones parecidas, esta página te ayuda a distinguir cuál es la mejor para el caso concreto.</p>
+      </div>
+    </div>
+
+    <div class="note">
+      Si buscas una recomendación rápida, empieza por la tarea principal: comprimir, unir, extraer, proteger o convertir. Elegir la herramienta exacta ahorra tiempo y mejora el resultado final.
+    </div>
+
+    <div class="cta-row">
+      <a class="btn-primary" href="index.html"><i class="fa-solid fa-toolbox"></i> Ver herramientas</a>
+      <a class="btn-secondary" href="acerca-de.html"><i class="fa-solid fa-users"></i> Conocer el proyecto</a>
+    </div>
+  </div>
+</div>
+
+<footer class="footer-bar">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="privacidad.html">Política de Privacidad</a>
+      <a href="terminos.html">Términos de Servicio</a>
+      <a href="acerca-de.html">Acerca de</a>
+      <a href="index.html">Inicio</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 PulpiTools</div>
+  </div>
+</footer>
+
+<script>
+(function(){const s=localStorage.getItem('pulpi_theme'),d=window.matchMedia('(prefers-color-scheme:dark)').matches;applyTheme(s||(d?'dark':'light'));})();
+function applyTheme(t){document.documentElement.setAttribute('data-theme',t);localStorage.setItem('pulpi_theme',t);const ic=document.getElementById('themeIcon');if(ic)ic.className=t==='dark'?'fa-solid fa-sun':'fa-solid fa-moon';}
+function toggleTheme(){applyTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');}
+</script>
+</body>
+</html>
